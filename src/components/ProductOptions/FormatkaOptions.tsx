@@ -1,10 +1,12 @@
 // components/ProductOptions/FormatkaOptions.tsx
-
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FormatkaOptions as FormatkaOptionsType } from '../../types/product.types';
 import { Package, Ruler, Layers, Sparkles, AlertCircle } from 'lucide-react';
 import { Tooltip } from '../UI/Tooltip';
+import { useCalculation } from '../../hooks/useCalculation';
+import { calculateFormatka } from '../../calculators/formatkaCalculator';
+import { useCalculatorStore } from '../../store/calculatorStore';
 
 interface FormatkaOptionsProps {
   onOptionsChange: (options: FormatkaOptionsType) => void;
@@ -29,11 +31,20 @@ export const FormatkaOptions: React.FC<FormatkaOptionsProps> = ({
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const { setCurrentProduct } = useCalculatorStore();
+
+  // Ustaw aktualny produkt
+  useEffect(() => {
+    setCurrentProduct('formatka');
+  }, [setCurrentProduct]);
+
+  // Automatyczne kalkulacje przy zmianach
+  useCalculation('formatka', options, calculateFormatka);
 
   useEffect(() => {
     validateOptions();
     onOptionsChange(options);
-  }, [options]);
+  }, [options, onOptionsChange]);
 
   const validateOptions = () => {
     const newErrors: Record<string, string> = {};
@@ -128,7 +139,7 @@ export const FormatkaOptions: React.FC<FormatkaOptionsProps> = ({
                 name="material"
                 value={material.value}
                 checked={options.material === material.value}
-                onChange={(e) => updateOption('material', e.target.value)}
+                onChange={(e) => updateOption('material', e.target.value as any)}
                 className="sr-only"
               />
               <div className="flex-1">
@@ -362,31 +373,4 @@ export const FormatkaOptions: React.FC<FormatkaOptionsProps> = ({
       </div>
     </motion.div>
   );
-};
-
-// components/ProductOptions/FormatkaOptions.tsx (fragment)
-import { useCalculation } from '../../hooks/useCalculation';
-import { calculateFormatka } from '../../calculators/formatkaCalculator';
-import { useCalculatorStore } from '../../store/calculatorStore';
-
-export const FormatkaOptions: React.FC<FormatkaOptionsProps> = ({
-  onOptionsChange,
-  initialOptions
-}) => {
-  const [options, setOptions] = useState<FormatkaOptionsType>({
-    // ... initial state
-  });
-
-  const { setCurrentProduct } = useCalculatorStore();
-
-  // Ustaw aktualny produkt
-  useEffect(() => {
-    setCurrentProduct('formatka');
-  }, [setCurrentProduct]);
-
-  // Automatyczne kalkulacje przy zmianach
-  useCalculation('formatka', options, calculateFormatka);
-
-  // Reszta komponentu pozostaje bez zmian
-  // ...
 };

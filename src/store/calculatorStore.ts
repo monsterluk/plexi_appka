@@ -1,8 +1,16 @@
 // store/calculatorStore.ts
 import { create } from 'zustand';
-import { CalculatorState, CalculationResult } from '../types/calculator.types';
+import { CalculationResult } from '../types/calculator.types';
 
-interface CalculatorStore extends CalculatorState {
+// Definiujemy osobny interfejs dla wyników kalkulacji
+interface CalculatorResults {
+  formatka?: CalculationResult;
+  kaseton?: CalculationResult;
+  ledon?: CalculationResult;
+}
+
+interface CalculatorStore extends CalculatorResults {
+  currentProduct: string | null;
   setCalculationResult: (product: string, result: CalculationResult) => void;
   setCurrentProduct: (product: string | null) => void;
   getTotalCost: () => number;
@@ -29,8 +37,8 @@ export const useCalculatorStore = create<CalculatorStore>((set, get) => ({
   getTotalCost: () => {
     const state = get();
     const currentProduct = state.currentProduct;
-    if (currentProduct && state[currentProduct as keyof CalculatorState]) {
-      const result = state[currentProduct as keyof CalculatorState] as CalculationResult;
+    if (currentProduct && state[currentProduct as keyof CalculatorResults]) {
+      const result = state[currentProduct as keyof CalculatorResults] as CalculationResult;
       return result.totalCost;
     }
     return 0;

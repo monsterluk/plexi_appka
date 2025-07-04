@@ -1,10 +1,10 @@
 // pages/Calculator.tsx
 import React from 'react';
-import { ProductProvider } from './contexts/ProductContext';
-import { ProductSelector } from './components/ProductSelector/ProductSelector';
-import { ProductOptionsSwitcher } from './components/ProductOptions/ProductOptionsSwitcher';
-import { Results } from './components/Results/Results';
-import { useProduct } from './contexts/ProductContext';
+import { ProductProvider } from '../contexts/ProductContext';
+import { ProductSelector } from '../components/ProductSelector/ProductSelector';
+import { ProductOptionsSwitcher } from '../components/ProductOptions/ProductOptionsSwitcher';
+import { Results } from '../components/Results/Results';
+import { useProduct } from '../contexts/ProductContext';
 
 const CalculatorContent: React.FC = () => {
   const { selectedProductType, setSelectedProductType } = useProduct();
@@ -12,6 +12,16 @@ const CalculatorContent: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-2">
+            Kalkulator PlexiSystem
+          </h1>
+          <p className="text-lg text-gray-600 dark:text-gray-400">
+            Profesjonalna wycena produktów z plexi
+          </p>
+        </div>
+
         {/* Selektor produktów */}
         <ProductSelector
           selectedProduct={selectedProductType}

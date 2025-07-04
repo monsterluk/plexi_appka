@@ -1,14 +1,12 @@
-// hooks/useCalculation.ts
+// src/hooks/useCalculation.ts
 import { useEffect, useRef, useCallback } from 'react';
 import { useCalculatorStore } from '../store/calculatorStore';
-import { calculateFormatka } from '../calculators/formatkaCalculator';
-import { calculateKaseton } from '../calculators/kasetonCalculator';
-import { calculateLedon } from '../calculators/ledonCalculator';
+import { CalculationResult } from '../types/calculator.types';
 
 export function useCalculation<T>(
   productType: string,
   options: T,
-  calculateFn: (options: T) => any,
+  calculateFn: (options: T) => CalculationResult,
   debounceMs: number = 300
 ) {
   const { setCalculationResult } = useCalculatorStore();

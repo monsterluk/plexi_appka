@@ -1,12 +1,10 @@
-// components/ProductOptions/ProductOptionsSwitcher.tsx
-
+// src/components/ProductOptions/ProductOptionsSwitcher.tsx
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useProduct } from '../../contexts/ProductContext';
 import { FormatkaOptions } from './FormatkaOptions';
-import { KasetonOptions } from './KasetonOptions';
-import { LedonOptions } from './LedonOptions';
-import { ProductType } from '../../types/product.types';
+// import { KasetonOptions } from './KasetonOptions';
+// import { LedonOptions } from './LedonOptions';
 
 export const ProductOptionsSwitcher: React.FC = () => {
   const { selectedProductType, updateProductOptions, productOptions } = useProduct();
@@ -36,23 +34,6 @@ export const ProductOptionsSwitcher: React.FC = () => {
             initialOptions={productOptions.formatka}
           />
         );
-      
-      case 'kaseton':
-        return (
-          <KasetonOptions
-            onOptionsChange={handleOptionsChange}
-            initialOptions={productOptions.kaseton}
-          />
-        );
-      
-      case 'ledon':
-        return (
-          <LedonOptions
-            onOptionsChange={handleOptionsChange}
-            initialOptions={productOptions.ledon}
-          />
-        );
-      
       // Dodaj pozostałe produkty gdy będą gotowe
       default:
         return (
@@ -78,21 +59,6 @@ export const ProductOptionsSwitcher: React.FC = () => {
           {renderOptions()}
         </motion.div>
       </AnimatePresence>
-
-      {/* Summary button */}
-      {selectedProductType && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="mt-8 flex justify-center"
-        >
-          <button className="px-8 py-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 
-                           text-white font-semibold rounded-xl shadow-lg transform transition-all hover:scale-105">
-            Oblicz wycenę
-          </button>
-        </motion.div>
-      )}
     </div>
   );
 };

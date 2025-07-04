@@ -1,12 +1,9 @@
-// calculators/formatkaCalculator.ts
+// src/calculators/formatkaCalculator.ts
 import { FormatkaOptions } from '../types/product.types';
 import { CalculationResult } from '../types/calculator.types';
 
 interface MaterialPrices {
-  plexi: number;
-  hips: number;
-  petg: number;
-  pc: number;
+  [key: string]: number;
 }
 
 const MATERIAL_PRICES: MaterialPrices = {
@@ -16,7 +13,7 @@ const MATERIAL_PRICES: MaterialPrices = {
   pc: 45
 };
 
-const MATERIAL_DENSITIES = {
+const MATERIAL_DENSITIES: MaterialPrices = {
   plexi: 1.19,
   hips: 1.05,
   petg: 1.27,
