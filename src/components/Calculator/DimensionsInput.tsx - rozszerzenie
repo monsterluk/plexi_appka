@@ -1,0 +1,141 @@
+// components/Calculator/DimensionsInput.tsx - rozszerzenie
+
+import React from 'react';
+import { motion } from 'framer-motion';
+import { Dimensions } from '../../types/calculator.types';
+import { Input } from '../UI/Input';
+import { Ruler, Box, Layers } from 'lucide-react';
+import styles from './DimensionsInput.module.css';
+
+interface Props {
+  dimensions: Dimensions;
+  onChange: (dimensions: Partial<Dimensions>) => void;
+  showDepth?: boolean;
+  productType?: string;
+  ekspozytorSubtype?: string;
+}
+
+export const DimensionsInput: React.FC<Props> = ({
+  dimensions,
+  onChange,
+  showDepth = false,
+  productType,
+  ekspozytorSubtype
+}) => {
+  // Dostosuj etykiety dla różnych typów produktów
+  const getLabels = () => {
+    if (productType === 'ekspozytory') {
+      switch (ekspozytorSubtype) {
+        case 'z_haczykami':
+          return {
+            width: 'Szerokość płyty tylnej',
+            height: 'Wysokość płyty tylnej',
+            depth: 'Głębokość podstawy'
+          };
+        case 'schodkowy':
+          return {
+            width: 'Szerokość całkowita',
+            height: 'Wysokość całkowita',
+            depth: 'Głębokość stopnia'
+          };
+        case 'kosmetyczny':
+          return {
+            width: 'Szerokość ekspozytora',
+            height: 'Wysokość (bez toppera)',
+            depth: 'Głębokość półek'
+          };
+        default:
+          return {
+            width: 'Szerokość',
+            height: 'Wysokość',
+            depth: 'Głębokość'
+          };
+      }
+    }
+    
+    return {
+      width: 'Szerokość',
+      height: 'Wysokość',
+      depth: 'Głębokość'
+    };
+  };
+
+  const labels = getLabels();
+
+  return (
+    <motion.div 
+      className={styles.container}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
+    >
+      <h3 className={styles.title}>Wymiary produktu</h3>
+      
+      <div className={styles.inputGrid}>
+        <Input
+          label={labels.width}
+          type="number"
+          min="10"
+          max="3000"
+          value={dimensions.width.toString()}
+          onChange={(e) => onChange({ width: parseInt(e.target.value) || 0 })}
+          icon={<Ruler size={18} />}
+          tooltip="Wprowadź szerokość w milimetrach"
+          suffix="mm"
+        />
+
+        <Input
+          label={labels.height}
+          type="number"
+          min="10"
+          max="3000"
+          value={dimensions.height.toString()}
+          onChange={(e) => onChange({ height: parseInt(e.target.value) || 0 })}
+          icon={<Box size={18} />}
+          tooltip="Wprowadź wysokość w milimetrach"
+          suffix="mm"
+        />
+
+        {showDepth && (
+          <Input
+            label={labels.depth}
+            type="number"
+            min="10"
+            max="1000"
+            value={dimensions.depth.toString()}
+            onChange={(e) => onChange({ depth: parseInt(e.target.value) || 0 })}
+            icon={<Layers size={18} />}
+            tooltip="Wprowadź głębokość w milimetrach"
+            suffix="mm"
+          />
+        )}
+      </div>
+
+      {/* Podpowiedzi dla ekspozytorów */}
+      {productType === 'ekspozytory' && (
+        <motion.div 
+          className={styles.hints}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2 }}
+        >
+          {ekspozytorSubtype === 'schodkowy' && (
+            <p className={styles.hint}>
+              💡 Wysokość całkowita będzie podzielona równomiernie między poziomy
+            </p>
+          )}
+          {ekspozytorSubtype === 'kosmetyczny' && (
+            <p className={styles.hint}>
+              💡 Wysokość toppera dodawana jest osobno w opcjach
+            </p>
+          )}
+          {ekspozytorSubtype === 'z_haczykami' && (
+            <p className={styles.hint}>
+              💡 Głębokość podstawy jest opcjonalna - pozostaw 0 jeśli bez podstawy
+            </p>
+          )}
+        </motion.div>
+      )}
+    </motion.div>
+  );
+};

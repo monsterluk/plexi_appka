@@ -1,0 +1,121 @@
+/* ProductGrid.module.css */
+
+.container {
+    width: 100%;
+    padding: var(--spacing-xl) 0;
+  }
+  
+  .title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+    background: var(--gradient-accent);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-lg);
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .card {
+    position: relative;
+    background: var(--color-bg-secondary);
+    border: 2px solid transparent;
+    border-radius: var(--radius-2xl);
+    padding: var(--spacing-xl);
+    cursor: pointer;
+    transition: all var(--transition-base);
+    overflow: hidden;
+  }
+  
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, 
+      transparent 0%, 
+      var(--product-color) 50%, 
+      transparent 100%
+    );
+    transform: scaleX(0);
+    transition: transform var(--transition-base);
+  }
+  
+  .card:hover::before {
+    transform: scaleX(1);
+  }
+  
+  .card:hover {
+    border-color: var(--product-color);
+    transform: translateY(-4px);
+  }
+  
+  .iconWrapper {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto var(--spacing-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, 
+      var(--product-color) 0%, 
+      color-mix(in srgb, var(--product-color) 70%, white) 100%
+    );
+    border-radius: var(--radius-xl);
+    color: var(--color-bg-primary);
+    box-shadow: 0 8px 24px color-mix(in srgb, var(--product-color) 30%, transparent);
+  }
+  
+  .cardTitle {
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: var(--spacing-xs);
+    color: var(--color-text-primary);
+  }
+  
+  .cardDescription {
+    font-size: 0.875rem;
+    text-align: center;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-md);
+  }
+  
+  .cardHover {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: var(--spacing-sm);
+    background: var(--gradient-accent);
+    transform: translateY(100%);
+    transition: transform var(--transition-base);
+    text-align: center;
+    font-weight: 600;
+    color: var(--color-bg-primary);
+  }
+  
+  .card:hover .cardHover {
+    transform: translateY(0);
+  }
+  
+  @media (max-width: 768px) {
+    .grid {
+      grid-template-columns: 1fr;
+      gap: var(--spacing-md);
+    }
+    
+    .title {
+      font-size: 2rem;
+    }
+  }

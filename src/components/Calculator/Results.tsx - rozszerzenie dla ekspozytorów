@@ -1,0 +1,207 @@
+// components/Calculator/Results.tsx - rozszerzenie dla ekspozytorów
+
+import React from 'react';
+import { motion } from 'framer-motion';
+import { useViewMode } from '../../contexts/ViewModeContext';
+import { CalculationResult } from '../../types/calculator.types';
+import { Package, Layers, Euro, Truck } from 'lucide-react';
+import styles from './Results.module.css';
+
+interface Props {
+  results: CalculationResult;
+  productType?: string;
+  ekspozytorDetails?: {
+    subtype: string;
+    multiplier: number;
+    additionalCosts: number;
+  };
+}
+
+export const Results: React.FC<Props> = ({ 
+  results, 
+  productType,
+  ekspozytorDetails 
+}) => {
+  const { isEstimatorMode } = useViewMode();
+
+  return (
+    <motion.div 
+      className={styles.container}
+      initial={{ opacity: 0, x: 20 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.3 }}
+    >
+      <h2 className={styles.title}>Podsumowanie kalkulacji</h2>
+
+      {/* Szczegóły komponentów */}
+      <div className={styles.section}>
+        <div className={styles.sectionHeader}>
+          <Package size={20} />
+          <h3>Komponenty produktu</h3>
+        </div>
+        
+        <div className={styles.componentsList}>
+          {results.components.map((component, index) => (
+            <motion.div
+              key={index}
+              className={styles.component}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.05 }}
+            >
+              <div className={styles.componentHeader}>
+                <span className={styles.componentName}>{component.name}</span>
+                <span className={styles.componentType}>{component.type}</span>
+              </div>
+              
+              <div className={styles.componentDetails}>
+                <div className={styles.detail}>
+                  <span>Powierzchnia:</span>
+                  <span>{component.surface.toFixed(4)} m²</span>
+                </div>
+                <div className={styles.detail}>
+                  <span>Waga:</span>
+                  <span>{component.weight.toFixed(2)} kg</span>
+                </div>
+                {component.edgeLength > 0 && (
+                  <div className={styles.detail}>
+                    <span>Krawędzie:</span>
+                    <span>{component.edgeLength.toFixed(2)} m</span>
+                  </div>
+                )}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+
+      {/* Specjalne informacje dla ekspozytorów */}
+      {productType === 'ekspozytory' && ekspozytorDetails && (
+        <div className={styles.ekspozytorInfo}>
+          <div className={styles.infoCard}>
+            <h4>Typ ekspozytora</h4>
+            <p className={styles.ekspozytorType}>{ekspozytorDetails.subtype}</p>
+          </div>
+          
+          {isEstimatorMode && (
+            <>
+              <div className={styles.infoCard}>
+                <h4>Mnożnik cenowy</h4>
+                <p className={styles.multiplier}>×{ekspozytorDetails.multiplier}</p>
+              </div>
+              
+              {ekspozytorDetails.additionalCosts > 0 && (
+                <div className={styles.infoCard}>
+                  <h4>Koszty dodatkowe</h4>
+                  <p className={styles.additionalCosts}>
+                    {ekspozytorDetails.additionalCosts.toFixed(2)} zł
+                  </p>
+                </div>
+              )}
+            </>
+          )}
+        </div>
+      )}
+
+      {/* Koszty materiałowe */}
+      <div className={styles.section}>
+        <div className={styles.sectionHeader}>
+          <Layers size={20} />
+          <h3>Koszty materiałowe</h3>
+        </div>
+        
+        <div className={styles.costBreakdown}>
+          <div className={styles.costRow}>
+            <span>Powierzchnia całkowita:</span>
+            <span>{results.totalMaterial.surface.toFixed(4)} m²</span>
+          </div>
+          <div className={styles.costRow}>
+            <span>Waga całkowita:</span>
+            <span>{results.totalMaterial.weight.toFixed(2)} kg</span>
+          </div>
+          {isEstimatorMode && (
+            <>
+              <div className={styles.costRow}>
+                <span>Odpad produkcyjny:</span>
+                <span>{(results.totalMaterial.wastePercentage * 100).toFixed(0)}%</span>
+              </div>
+              <div className={styles.costRow highlight}>
+                <span>Koszt materiału:</span>
+                <span>{results.totalMaterial.cost.toFixed(2)} zł</span>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+
+      {/* Dodatki */}
+      {results.addons.length > 0 && (
+        <div className={styles.section}>
+          <div className={styles.sectionHeader}>
+            <Euro size={20} />
+            <h3>Usługi dodatkowe</h3>
+          </div>
+          
+          <div className={styles.addonsList}>
+            {results.addons.map((addon, index) => (
+              <div key={index} className={styles.addonRow}>
+                <span>{addon.name}</span>
+                <span className={styles.addonDetails}>
+                  {addon.quantity} {addon.unit} × {addon.unitPrice} zł
+                </span>
+                <span className={styles.addonPrice}>
+                  {addon.totalPrice.toFixed(2)} zł
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Logistyka */}
+      <div className={styles.section}>
+        <div className={styles.sectionHeader}>
+          <Truck size={20} />
+          <h3>Pakowanie i dostawa</h3>
+        </div>
+        
+        <div className={styles.logisticsInfo}>
+          <div className={styles.logisticsRow}>
+            <span>Pakowanie:</span>
+            <span>{results.logistics.packaging.type}</span>
+            <span>{results.logistics.packaging.cost.toFixed(2)} zł</span>
+          </div>
+          <div className={styles.logisticsRow}>
+            <span>Dostawa:</span>
+            <span>{results.logistics.delivery.type}</span>
+            <span>{results.logistics.delivery.cost.toFixed(2)} zł</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Podsumowanie końcowe */}
+      <div className={styles.summary}>
+        <div className={styles.summaryRow}>
+          <span>Koszt produktu:</span>
+          <span>{results.summary.productCost.toFixed(2)} zł</span>
+        </div>
+        <div className={styles.summaryRow}>
+          <span>Koszt logistyki:</span>
+          <span>{results.summary.logisticsCost.toFixed(2)} zł</span>
+        </div>
+        <div className={styles.summaryRow total}>
+          <span>Suma netto:</span>
+          <span>{results.summary.totalNetto.toFixed(2)} zł</span>
+        </div>
+        <div className={styles.summaryRow}>
+          <span>VAT 23%:</span>
+          <span>{results.summary.vat.toFixed(2)} zł</span>
+        </div>
+        <div className={styles.summaryRow totalBrutto}>
+          <span>Suma brutto:</span>
+          <span>{results.summary.totalBrutto.toFixed(2)} zł</span>
+        </div>
+      </div>
+    </motion.div>
+  );
+};

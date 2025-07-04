@@ -1,0 +1,45 @@
+// utils/edgeCalculations.ts - POPRAWIONY
+
+export function calculateEdgeLength(
+  productType: string,
+  components: ComponentCalculation[],
+  options?: any
+): number {
+  switch (productType) {
+    case 'plyta':
+      // Formatka: suma obwodów
+      return components.reduce((sum, c) => sum + c.edgeLength, 0);
+      
+    case 'pojemnik':
+      // Wszystkie krawędzie zewnętrzne + wieko jeśli jest
+      return components
+        .filter(c => c.type !== 'partition') // Bez przegród wewnętrznych
+        .reduce((sum, c) => sum + c.edgeLength, 0);
+      
+    case 'gablota':
+      // Bez frontu i dna, ale z opcjonalną podstawą
+      return components
+        .filter(c => c.name !== 'Przód' && c.name !== 'Dno')
+        .reduce((sum, c) => sum + c.edgeLength, 0);
+      
+    case 'obudowa':
+      // Tylko zaznaczone ściany
+      return components.reduce((sum, c) => sum + c.edgeLength, 0);
+      
+    case 'impuls_kasowy':
+      // Krawędzie zewnętrzne + górne krawędzie ograniczników
+      let totalLength = 0;
+      components.forEach(c => {
+        if (c.name.includes('Ogranicznik')) {
+          // Tylko górna krawędź ogranicznika
+          totalLength += c.dimensions.width / 1000;
+        } else {
+          totalLength += c.edgeLength;
+        }
+      });
+      return totalLength;
+      
+    default:
+      return components.reduce((sum, c) => sum + c.edgeLength, 0);
+  }
+}

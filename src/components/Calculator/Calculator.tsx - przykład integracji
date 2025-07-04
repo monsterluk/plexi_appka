@@ -1,0 +1,304 @@
+// components/Calculator/Calculator.tsx - przykład integracji
+
+import React from 'react';
+import { motion } from 'framer-motion';
+import { useCalculatorLogic } from '../../hooks/useCalculatorLogic';
+import { useProductSpecific } from '../../hooks/useProductSpecific';
+import { ProductSelector } from './ProductSelector';
+import { DimensionsInput } from './DimensionsInput';
+import { MaterialSelector } from './MaterialSelector';
+import { EkspozytorOptionsWrapper } from '../ProductOptions/Ekspozytory/EkspozytorOptionsWrapper';
+import { ContainerOptions } from '../ProductOptions/ContainerOptions';
+import { Results } from './Results';
+import { Button } from '../UI/Button';
+import { Save, Download, Calculator as CalcIcon } from 'lucide-react';
+import styles from './Calculator.module.css';
+
+export const Calculator: React.FC = () => {
+  const {
+    state,
+    results,
+    updateState,
+    updateDimensions,
+    calculate
+  } = useCalculatorLogic();
+
+  const productSpecific = useProductSpecific(state.productType);
+
+  // Handler dla ekspozytorów
+  const handleEkspozytorOptionsChange = (options: EkspozytorOptions) => {
+    productSpecific.updateEkspozytorOptions(options);
+    updateState({ ekspozytorOptions: options });
+  };
+
+  // Walidacja przed kalkulacją
+  const handleCalculate = () => {
+    const errors = productSpecific.validateOptions();
+    if (errors.length > 0) {
+      alert('Błędy walidacji:\n' + errors.join('\n'));
+      return;
+    }
+    calculate();
+  };
+
+  // Określ czy pokazać głębokość
+  const showDepth = ['pojemnik', 'gablota', 'obudowa', 'ekspozytory'].includes(state.productType);
+
+  return (
+    <div className={styles.calculator}>
+      <div className={styles.header}>
+        <h1>Kalkulator PlexiSystem</h1>
+        <p>Profesjonalny kalkulator wyceny produktów z plexi</p>
+      </div>
+
+      <div className={styles.content}>
+        <div className={styles.formSection}>
+          {/* Wybór produktu */}
+          <ProductSelector
+            value={state.productType}
+            onChange={(productType) => updateState({ productType })}
+          />
+
+          {/* Wymiary */}
+          <DimensionsInput
+            dimensions={state.dimensions}
+            onChange={updateDimensions}
+            showDepth={showDepth}
+            productType={state.productType}
+            ekspozytorSubtype={state.ekspozytorOptions?.subtype}
+          />
+
+          {/* Materiał (jeśli nie ekspozytory - mają własny wybór) */}
+          {state.productType !== 'ekspozytory' && (
+            <MaterialSelector
+              material={state.material}
+              thickness={state.thickness}
+              onMaterialChange={(material) => updateState({ material })}
+              onThicknessChange={(thickness) => updateState({ thickness })}
+            />
+          )}
+
+          {/* Opcje specyficzne dla produktu */}
+          <motion.div
+            key={state.productType}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+            className={styles.productOptions}
+          >
+            {state.productType === 'ekspozytory' && (
+              <EkspozytorOptionsWrapper
+                options={productSpecific.ekspozytorOptions}
+                onChange={handleEkspozytorOptionsChange}
+                dimensions={state.dimensions}
+              />
+            )}
+
+            {state.productType === 'pojemnik' && productSpecific.containerOptions && (
+              <ContainerOptions
+                options={productSpecific.containerOptions}
+                onChange={productSpecific.updateContainerOptions}
+              />
+            )}
+
+          // components/Calculator/Calculator.tsx - przykład integracji
+
+import React from 'react';
+import { motion } from 'framer-motion';
+import { useCalculatorLogic } from '../../hooks/useCalculatorLogic';
+import { useProductSpecific } from '../../hooks/useProductSpecific';
+import { ProductSelector } from './ProductSelector';
+import { DimensionsInput } from './DimensionsInput';
+import { MaterialSelector } from './MaterialSelector';
+import { EkspozytorOptionsWrapper } from '../ProductOptions/Ekspozytory/EkspozytorOptionsWrapper';
+import { ContainerOptions } from '../ProductOptions/ContainerOptions';
+import { Results } from './Results';
+import { Button } from '../UI/Button';
+import { Save, Download, Calculator as CalcIcon } from 'lucide-react';
+import styles from './Calculator.module.css';
+
+export const Calculator: React.FC = () => {
+  const {
+    state,
+    results,
+    updateState,
+    updateDimensions,
+    calculate
+  } = useCalculatorLogic();
+
+  const productSpecific = useProductSpecific(state.productType);
+
+  // Handler dla ekspozytorów
+  const handleEkspozytorOptionsChange = (options: EkspozytorOptions) => {
+    productSpecific.updateEkspozytorOptions(options);
+    updateState({ ekspozytorOptions: options });
+  };
+
+  // Walidacja przed kalkulacją
+  const handleCalculate = () => {
+    const errors = productSpecific.validateOptions();
+    if (errors.length > 0) {
+      alert('Błędy walidacji:\n' + errors.join('\n'));
+      return;
+    }
+    calculate();
+  };
+
+  // Określ czy pokazać głębokość
+  const showDepth = ['pojemnik', 'gablota', 'obudowa', 'ekspozytory'].includes(state.productType);
+
+  return (
+    <div className={styles.calculator}>
+      <div className={styles.header}>
+        <h1>Kalkulator PlexiSystem</h1>
+        <p>Profesjonalny kalkulator wyceny produktów z plexi</p>
+      </div>
+
+      <div className={styles.content}>
+        <div className={styles.formSection}>
+          {/* Wybór produktu */}
+          <ProductSelector
+            value={state.productType}
+            onChange={(productType) => updateState({ productType })}
+          />
+
+          {/* Wymiary */}
+          <DimensionsInput
+            dimensions={state.dimensions}
+            onChange={updateDimensions}
+            showDepth={showDepth}
+            productType={state.productType}
+            ekspozytorSubtype={state.ekspozytorOptions?.subtype}
+          />
+
+          {/* Materiał (jeśli nie ekspozytory - mają własny wybór) */}
+          {state.productType !== 'ekspozytory' && (
+            <MaterialSelector
+              material={state.material}
+              thickness={state.thickness}
+              onMaterialChange={(material) => updateState({ material })}
+              onThicknessChange={(thickness) => updateState({ thickness })}
+            />
+          )}
+
+          {/* Opcje specyficzne dla produktu */}
+          <motion.div
+            key={state.productType}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+            className={styles.productOptions}
+          >
+            {state.productType === 'ekspozytory' && (
+              <EkspozytorOptionsWrapper
+                options={productSpecific.ekspozytorOptions}
+                onChange={handleEkspozytorOptionsChange}
+                dimensions={state.dimensions}
+              />
+            )}
+
+            {state.productType === 'pojemnik' && productSpecific.containerOptions && (
+              <ContainerOptions
+                options={productSpecific.containerOptions}
+                onChange={productSpecific.updateContainerOptions}
+              />
+            )}
+
+{/* Inne opcje produktów */}
+           {state.productType === 'gablota' && productSpecific.cabinetOptions && (
+             <CabinetOptions
+               options={productSpecific.cabinetOptions}
+               onChange={productSpecific.updateCabinetOptions}
+             />
+           )}
+
+           {state.productType === 'obudowa' && productSpecific.enclosureOptions && (
+             <EnclosureOptions
+               options={productSpecific.enclosureOptions}
+               onChange={productSpecific.updateEnclosureOptions}
+             />
+           )}
+
+           {state.productType === 'impuls_kasowy' && productSpecific.impulsOptions && (
+             <ImpulsOptions
+               options={productSpecific.impulsOptions}
+               onChange={productSpecific.updateImpulsOptions}
+             />
+           )}
+
+           {state.productType === 'kaseton' && productSpecific.kasetonOptions && (
+             <KasetonOptions
+               options={productSpecific.kasetonOptions}
+               onChange={productSpecific.updateKasetonOptions}
+             />
+           )}
+
+           {state.productType === 'ledon' && productSpecific.ledonOptions && (
+             <LedonOptions
+               options={productSpecific.ledonOptions}
+               onChange={productSpecific.updateLedonOptions}
+             />
+           )}
+         </motion.div>
+
+         {/* Dodatki uniwersalne */}
+         <AddonsSection
+           addons={state.addons}
+           onChange={(addons) => updateState({ addons })}
+           productType={state.productType}
+         />
+
+         {/* Przyciski akcji */}
+         <div className={styles.actions}>
+           <Button
+             variant="primary"
+             size="lg"
+             icon={<CalcIcon size={20} />}
+             onClick={handleCalculate}
+             fullWidth
+           >
+             Oblicz wycenę
+           </Button>
+
+           <div className={styles.secondaryActions}>
+             <Button
+               variant="secondary"
+               icon={<Save size={18} />}
+               onClick={() => console.log('Zapisz ofertę')}
+             >
+               Zapisz
+             </Button>
+             
+             <Button
+               variant="secondary"
+               icon={<Download size={18} />}
+               onClick={() => console.log('Eksportuj PDF')}
+             >
+               PDF
+             </Button>
+           </div>
+         </div>
+       </div>
+
+       {/* Wyniki */}
+       <div className={styles.resultsSection}>
+         <Results 
+           results={results}
+           productType={state.productType}
+           ekspozytorDetails={
+             state.productType === 'ekspozytory' && state.ekspozytorOptions
+               ? {
+                   subtype: state.ekspozytorOptions.subtype,
+                   multiplier: MULTIPLIERS[state.ekspozytorOptions.subtype],
+                   additionalCosts: results.addons
+                     .filter(a => !a.appliesToMultiplier)
+                     .reduce((sum, a) => sum + a.totalPrice, 0)
+                 }
+               : undefined
+           }
+         />
+       </div>
+     </div>
+   </div>
+ );
+};

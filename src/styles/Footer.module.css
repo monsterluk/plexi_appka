@@ -1,0 +1,110 @@
+/* Footer.module.css */
+
+.footer {
+    background: var(--color-bg-secondary);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: auto;
+  }
+  
+  .container {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: var(--spacing-lg);
+  }
+  
+  .content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-xl);
+    align-items: start;
+  }
+  
+  .section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+  
+  .sectionTitle {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-xs);
+  }
+  
+  .contactInfo {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+  }
+  
+  .contactItem {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    transition: color var(--transition-base);
+  }
+  
+  .contactItem:hover {
+    color: var(--color-accent-orange);
+  }
+  
+  .links {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+  }
+  
+  .link {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    transition: color var(--transition-base);
+  }
+  
+  .link:hover {
+    color: var(--color-accent-orange);
+  }
+  
+  .branding {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    align-items: flex-end;
+    margin-left: auto;
+  }
+  
+  .madeWith {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    color: var(--color-text-secondary);
+    font-size: 0.875rem;
+  }
+  
+  .heart {
+    color: #FF4081;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  
+  .version {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    font-family: 'Monaco', 'Consolas', monospace;
+  }
+  
+  @media (max-width: 768px) {
+    .content {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+    
+    .branding {
+      align-items: center;
+      margin-left: 0;
+      margin-top: var(--spacing-lg);
+      padding-top: var(--spacing-lg);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+  }

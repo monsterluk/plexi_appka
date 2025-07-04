@@ -1,0 +1,99 @@
+/* styles/globals.css */
+
+:root {
+    /* Kolory główne */
+    --color-bg-primary: #0E1A2B;
+    --color-bg-secondary: #162236;
+    --color-bg-tertiary: #1E2E45;
+    
+    /* Gradienty */
+    --gradient-accent: linear-gradient(135deg, #FF8F00 0%, #FFD54F 100%);
+    --gradient-orange: linear-gradient(135deg, #FF6F00 0%, #FF8F00 100%);
+    --gradient-blue: linear-gradient(135deg, #1976D2 0%, #29B6F6 100%);
+    
+    /* Akcenty */
+    --color-accent-orange: #FF6F00;
+    --color-accent-blue: #29B6F6;
+    --color-accent-yellow: #FFD54F;
+    
+    /* Kolory produktów */
+    --color-product-formatka: #90CAF9;
+    --color-product-pojemnik: #A5D6A7;
+    --color-product-gablota: #CE93D8;
+    --color-product-obudowa: #FFE082;
+    --color-product-ledon: #FF4081;
+    --color-product-kaseton: #80CBC4;
+    --color-product-ekspozytory: #F48FB1;
+    --color-product-impuls: #B39DDB;
+    
+    /* Tekst */
+    --color-text-primary: #FFFFFF;
+    --color-text-secondary: #B0BEC5;
+    --color-text-muted: #78909C;
+    
+    /* Cienie */
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.2);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.4);
+    --shadow-glow: 0 0 20px rgba(255, 143, 0, 0.3);
+    
+    /* Spacing */
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 1.5rem;
+    --spacing-lg: 2rem;
+    --spacing-xl: 3rem;
+    
+    /* Border radius */
+    --radius-sm: 0.5rem;
+    --radius-md: 0.75rem;
+    --radius-lg: 1rem;
+    --radius-xl: 1.5rem;
+    --radius-2xl: 2rem;
+    
+    /* Transitions */
+    --transition-fast: 150ms ease;
+    --transition-base: 250ms ease;
+    --transition-slow: 350ms ease;
+  }
+  
+  /* Tryb jasny (opcjonalny) */
+  [data-theme="light"] {
+    --color-bg-primary: #F5F7FA;
+    --color-bg-secondary: #FFFFFF;
+    --color-bg-tertiary: #E8EAF0;
+    --color-text-primary: #1A202C;
+    --color-text-secondary: #4A5568;
+    --color-text-muted: #718096;
+  }
+  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--color-bg-primary);
+    color: var(--color-text-primary);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  /* Animacje globalne */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+  }
+  
+  @keyframes slideIn {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(0); }
+  }

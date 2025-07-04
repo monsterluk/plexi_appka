@@ -1,0 +1,142 @@
+/* calculator.css */
+
+.calculator {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .calculator-body {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 30px;
+  }
+  
+  /* Wizualizacja ścian */
+  .wall-visualizer {
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 12px;
+  }
+  
+  .walls-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-rows: 1fr 2fr 1fr;
+    gap: 10px;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+  
+  .wall-option {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .wall-top { grid-column: 2; grid-row: 1; }
+  .wall-left { grid-column: 1; grid-row: 2; }
+  .wall-center { grid-column: 2; grid-row: 2; }
+  .wall-right { grid-column: 3; grid-row: 2; }
+  .wall-bottom { grid-column: 2; grid-row: 3; }
+  
+  .wall-center {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 5px;
+  }
+  
+  .wall-option label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: white;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  
+  .wall-option input:checked + span {
+    color: #667eea;
+    font-weight: 600;
+  }
+  
+  .wall-option label:has(input:checked) {
+    border-color: #667eea;
+    background: #f0f4ff;
+  }
+  
+  /* Opcje pojemnika */
+  .container-options {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 12px;
+    margin: 20px 0;
+  }
+  
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .checkbox-label input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: #667eea;
+  }
+  
+  .partition-option {
+    margin: 15px 0;
+    padding: 15px;
+    background: white;
+    border-radius: 8px;
+  }
+  
+  .partition-count {
+    margin-top: 10px;
+    margin-left: 28px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .partition-count input {
+    width: 60px;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  /* Wyniki */
+  .results-section {
+    position: sticky;
+    top: 20px;
+  }
+  
+  .component-result {
+    padding: 10px;
+    margin: 5px 0;
+    background: #f8f9fa;
+    border-radius: 8px;
+    font-size: 14px;
+  }
+  
+  .component-result .component-name {
+    font-weight: 600;
+    color: #333;
+  }
+  
+  .component-result .component-details {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 5px;
+    margin-top: 5px;
+    font-size: 12px;
+    color: #666;
+  }

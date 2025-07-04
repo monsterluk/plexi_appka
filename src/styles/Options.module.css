@@ -1,0 +1,268 @@
+/* Options.module.css */
+
+.container {
+    width: 100%;
+    animation: fadeIn var(--transition-slow) ease-out;
+  }
+  
+  .header {
+    margin-bottom: var(--spacing-lg);
+  }
+  
+  .header h4 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-sm);
+  }
+  
+  .description {
+    color: var(--color-text-secondary);
+    font-size: 0.875rem;
+    line-height: 1.6;
+  }
+  
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-xl);
+    margin-top: var(--spacing-lg);
+  }
+  
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+  
+  .visualization {
+    background: var(--color-bg-tertiary);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    box-shadow: var(--shadow-md);
+  }
+  
+  .vizHeader {
+    text-align: center;
+    margin-bottom: var(--spacing-md);
+  }
+  
+  .vizHeader h5 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-xs);
+  }
+  
+  .vizHeader p {
+    color: var(--color-text-secondary);
+    font-size: 0.875rem;
+  }
+  
+  .sliderGroup {
+    padding: var(--spacing-md);
+    background: var(--color-bg-tertiary);
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .sliderGroup label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: var(--spacing-sm);
+    color: var(--color-text-primary);
+  }
+  
+  .hint {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    margin-top: var(--spacing-xs);
+  }
+
+.advanced {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-lg);
+  }
+  
+  .optionCard {
+    background: var(--color-bg-tertiary);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-lg);
+    transition: all var(--transition-base);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .optionCard::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--gradient-accent);
+    transform: scaleX(0);
+    transition: transform var(--transition-base);
+  }
+  
+  .optionCard:hover {
+    border-color: var(--color-accent-orange);
+    box-shadow: var(--shadow-lg);
+  }
+  
+  .optionCard:hover::before {
+    transform: scaleX(1);
+  }
+  
+  .optionCard h5 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-md);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+  }
+  
+  .materialSection {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-lg);
+    padding-top: var(--spacing-lg);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .holesPreview {
+    grid-column: 1 / -1;
+    margin-top: var(--spacing-xl);
+    padding: var(--spacing-lg);
+    background: var(--color-bg-secondary);
+    border-radius: var(--radius-lg);
+    text-align: center;
+  }
+  
+  .holesPreview h5 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-md);
+  }
+  
+  /* EkspozytorSelector.module.css */
+  
+  .container {
+    width: 100%;
+    margin-bottom: var(--spacing-xl);
+  }
+  
+  .title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: var(--spacing-lg);
+    background: var(--gradient-accent);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  
+  .card {
+    position: relative;
+    background: var(--color-bg-secondary);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-md);
+    cursor: pointer;
+    transition: all var(--transition-base);
+    text-align: center;
+    overflow: hidden;
+  }
+  
+  .card.selected {
+    border-color: var(--color-accent-orange);
+    background: var(--color-bg-tertiary);
+    box-shadow: 0 0 0 3px rgba(255, 111, 0, 0.2);
+  }
+  
+  .card:hover:not(.selected) {
+    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: var(--shadow-md);
+  }
+  
+  .iconWrapper {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto var(--spacing-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(255, 143, 0, 0.1), rgba(255, 213, 79, 0.1));
+    border-radius: var(--radius-lg);
+    color: var(--color-accent-orange);
+    transition: all var(--transition-base);
+  }
+  
+  .card.selected .iconWrapper {
+    background: var(--gradient-accent);
+    color: var(--color-bg-primary);
+    box-shadow: var(--shadow-glow);
+  }
+  
+  .cardTitle {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-xs);
+  }
+  
+  .cardDescription {
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+    line-height: 1.4;
+    margin-bottom: var(--spacing-sm);
+  }
+  
+  .multiplierBadge {
+    position: absolute;
+    top: var(--spacing-xs);
+    right: var(--spacing-xs);
+    background: var(--gradient-accent);
+    color: var(--color-bg-primary);
+    padding: 2px 8px;
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .advanced {
+      grid-template-columns: 1fr;
+    }
+    
+    .materialSection {
+      grid-template-columns: 1fr;
+    }
+  }

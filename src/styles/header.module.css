@@ -1,0 +1,97 @@
+/* Header.module.css */
+
+.header {
+  background: var(--color-bg-secondary);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  backdrop-filter: blur(10px);
+  box-shadow: var(--shadow-md);
+}
+
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: var(--spacing-md) var(--spacing-lg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.logo img {
+  height: 40px;
+  width: auto;
+}
+
+.logo span {
+  font-size: 1.5rem;
+  font-weight: 700;
+  background: var(--gradient-accent);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.offerBadge {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-xs) var(--spacing-md);
+  background: var(--gradient-accent);
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-glow);
+}
+
+.offerLabel {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-bg-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.offerNumber {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-bg-primary);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.iconButton {
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--color-text-primary);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.iconButton:hover {
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: var(--shadow-sm);
+}
+
+.menuButton {
+  composes: iconButton;
+  background: var(--gradient-accent);
+  color: var(--color-bg-primary);
+}
