@@ -12,11 +12,7 @@ export function calculateImpulsKasowy(
   dimensions: { width: number; height: number; depth: number },
   options: ImpulsKasowyOptions,
   quantity: number
-): ImpulsCalculationResult & { 
-  components: ComponentCalculation[];
-  totalSurface: number;
-  totalWeight: number;
-} {
+): ImpulsCalculationResult {
   const components: ComponentCalculation[] = [];
   const { width, height, depth } = dimensions;
   const limiterHeight = options.features.customLimiterHeight 
@@ -97,7 +93,7 @@ export function calculateImpulsKasowy(
                       IMPULS_MULTIPLIER * quantity;
 
   // Koszt gięcia na gorąco
-  const bendingPricePerMeter = BENDING_PRICES[options.thickness] || 5;
+  const bendingPricePerMeter = BENDING_PRICES[options.thickness as keyof typeof BENDING_PRICES] || 5;
   const bendingCost = totalBendingLength * bendingPricePerMeter * quantity;
 
   // 5. GRAFIKA (bez mnożnika)
@@ -160,13 +156,17 @@ export function calculateImpulsKasowy(
   // 8. PODSUMOWANIE
   const totalCost = materialCost + bendingCost + graphicsCost + totalAdditionalCosts;
 
-  return {
-    components: components.map(c => ({
+  const filteredComponents = components
+    .filter(c => c.type === 'wall' || c.type === 'shelf' || c.type === 'limiter')
+    .map(c => ({
       name: c.name,
       type: c.type as 'wall' | 'shelf' | 'limiter',
       surface: c.surface,
       bendingLength: c.type === 'limiter' ? width / 1000 : undefined
-    })),
+    }));
+
+  return {
+    components: filteredComponents,
     materialCost,
     graphicsCost,
     bendingCost,
@@ -176,8 +176,6 @@ export function calculateImpulsKasowy(
       limiterHeight: limiterHeight,
       totalDepthWithLimiter: depth + limiterHeight
     },
-    // Dodatkowe pola dla integracji
-    components: components,
     totalSurface: totalSurface * quantity,
     totalWeight
   };
@@ -200,7 +198,7 @@ export function getImpulsAddons(
 
   // Gięcie na gorąco
   const bendingLength = (dimensions.width * options.shelvesCount) / 1000;
-  const bendingPrice = BENDING_PRICES[options.thickness] || 5;
+  const bendingPrice = BENDING_PRICES[options.thickness as keyof typeof BENDING_PRICES] || 5;
   
   addons.push({
     name: 'Gięcie na gorąco ograniczników',

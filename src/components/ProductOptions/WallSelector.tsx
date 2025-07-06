@@ -120,7 +120,7 @@ export function WallSelector({ walls, onChange }: Props) {
         </button>
       </div>
       
-      <style jsx>{`
+      <style>{`
         .wall-shape {
           cursor: pointer;
           transition: all 0.3s ease;

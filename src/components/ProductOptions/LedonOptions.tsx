@@ -29,6 +29,8 @@ export const LedonOptions: React.FC<LedonOptionsProps> = ({
       remoteControl: initialOptions?.features?.remoteControl || false,
       mounting: initialOptions?.features?.mounting || 'wall'
     },
+    width: initialOptions?.width || 600,
+    height: initialOptions?.height || 200,
     quantity: initialOptions?.quantity || 1
   });
 
@@ -42,17 +44,24 @@ export const LedonOptions: React.FC<LedonOptionsProps> = ({
     setOptions(prev => ({ ...prev, [key]: value }));
   };
 
-  const updateSize = (key: keyof LedonOptionsType['size'], value: number) => {
+  const updateSize = (key: keyof NonNullable<LedonOptionsType['size']>, value: number) => {
     setOptions(prev => ({
       ...prev,
-      size: { ...prev.size, [key]: value }
+      size: { 
+        width: prev.size?.width || prev.width,
+        height: prev.size?.height || prev.height,
+        [key]: value 
+      }
     }));
   };
 
-  const updateFeature = (key: keyof LedonOptionsType['features'], value: any) => {
+  const updateFeature = (key: string, value: boolean) => {
     setOptions(prev => ({
       ...prev,
-      features: { ...prev.features, [key]: value }
+      features: { 
+        ...prev.features, 
+        [key]: value 
+      }
     }));
   };
 
@@ -190,7 +199,7 @@ export const LedonOptions: React.FC<LedonOptionsProps> = ({
           <label className="flex items-center gap-3 cursor-pointer p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700">
             <input
               type="checkbox"
-              checked={options.features.waterproof}
+              checked={options.features?.waterproof || false}
               onChange={(e) => updateFeature('waterproof', e.target.checked)}
               className="w-5 h-5 text-amber-500 rounded"
             />
@@ -208,7 +217,7 @@ export const LedonOptions: React.FC<LedonOptionsProps> = ({
           <label className="flex items-center gap-3 cursor-pointer p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700">
             <input
               type="checkbox"
-              checked={options.features.dimmer}
+              checked={options.features?.dimmer || false}
               onChange={(e) => updateFeature('dimmer', e.target.checked)}
               className="w-5 h-5 text-amber-500 rounded"
             />
@@ -226,7 +235,7 @@ export const LedonOptions: React.FC<LedonOptionsProps> = ({
           <label className="flex items-center gap-3 cursor-pointer p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700">
             <input
               type="checkbox"
-              checked={options.features.remoteControl}
+              checked={options.features?.remoteControl || false}
               onChange={(e) => updateFeature('remoteControl', e.target.checked)}
               className="w-5 h-5 text-amber-500 rounded"
             />

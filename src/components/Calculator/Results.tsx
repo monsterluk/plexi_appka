@@ -3,6 +3,10 @@
 
 import { useViewMode } from '../../contexts/ViewModeContext';
 
+interface Props {
+  results: any; // lub właściwy typ
+}
+
 export function Results({ results }: Props) {
   const { isEstimatorMode } = useViewMode();
   

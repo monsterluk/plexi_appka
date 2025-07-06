@@ -1,0 +1,127 @@
+// Product types for plexi_appka
+
+// types/products.types.ts
+
+import { MaterialSpec } from './calculator.types';
+
+export type ProductType = 
+  | 'plyta' 
+  | 'pojemnik' 
+  | 'gablota' 
+  | 'obudowa' 
+  | 'kaseton' 
+  | 'ledon' 
+  | 'ekspozytory' 
+  | 'impuls_kasowy'
+  | 'formatka';
+
+// Wymiary
+export interface Dimensions {
+  width: number;  // mm
+  height: number; // mm
+  depth: number;  // mm
+}
+
+// Pojemnik
+export interface ContainerOptions {
+  hasLid: boolean;
+  partitions: {
+    width: {
+      enabled: boolean;
+      count: number;
+    };
+    length: {
+      enabled: boolean;
+      count: number;
+    };
+  };
+  hardware: {
+    hinges: number;
+    locks: number;
+  };
+}
+
+// Gablota
+export interface CabinetOptions {
+  customBase: {
+    enabled: boolean;
+    material?: MaterialSpec;
+    thickness?: number;
+  };
+  partitions: {
+    enabled: boolean;
+    count: number;
+    direction: 'horizontal' | 'vertical';
+  };
+}
+
+// Obudowa
+export interface EnclosureOptions {
+  walls: {
+    front: boolean;
+    back: boolean;
+    left: boolean;
+    right: boolean;
+    top: boolean;
+    bottom: boolean;
+  };
+  features: {
+    hasDoor: boolean;
+    hasWindow: boolean;
+    hasHandle: boolean;
+  };
+}
+
+// Impuls kasowy
+export interface ImpulsOptions {
+  plexiType: 'clear' | 'white';
+  thickness: number;
+  shelvesCount: number; // min 2
+  graphics: {
+    type: 'none' | 'single' | 'double';
+  };
+}
+
+// Ekspozytory
+export interface DisplayOptions {
+  type: 'podstawkowy' | 'schodkowy' | 'z_haczykami' | 'wiszacy' | 'stojak' | 'kosmetyczny';
+  thickness: number;
+  // Opcje wspólne
+  graphics: 'none' | 'single' | 'double';
+  // Opcje specyficzne dla typów
+  specific: {
+    // podstawkowy
+    hasSides?: boolean;
+    // schodkowy
+    levels?: number;
+    // z_haczykami
+    hooksCount?: number;
+    hasBase?: boolean;
+    // kosmetyczny
+    hasSecondBottom?: boolean;
+    shelvesWithHoles?: number;
+    topperHeight?: number;
+  };
+}
+
+// Opcje bazowe
+export interface BaseProductOptions {
+  quantity: number;
+  notes?: string;
+}
+
+// Formatka
+export interface FormatkaOptions extends BaseProductOptions {
+  material: 'plexi' | 'hips' | 'petg' | 'pc';
+  thickness: number;
+  width: number;
+  height: number;
+  finishing: {
+    polishedEdges: boolean;
+    roundedCorners: boolean;
+    drillHoles: number;
+  };
+}
+
+// Kaseton - używamy już zdefiniowanego interfejsu z gablota.types.ts
+// LEDON - używamy już zdefiniowanego interfejsu z gablota.types.ts

@@ -1,6 +1,6 @@
 // components/ProductOptions/GablotaOptions.tsx
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { GablotaOptions as GablotaOptionsType } from '../../types/gablota.types';
 import { MaterialSpec } from '../../types/calculator.types';
@@ -9,22 +9,65 @@ import { Select } from '../UI/Select';
 import { Slider } from '../UI/Slider';
 import { Input } from '../UI/Input';
 import { RadioGroup } from '../UI/RadioGroup';
-import { Info, Box, Layers, Wind } from 'lucide-react';
+import { Info, Box, Layers, Wind, Settings } from 'lucide-react';
 import { Tooltip } from '../UI/Tooltip';
-import { materials } from '../../data/materials';
 import styles from './GablotaOptions.module.css';
 
+// Interfejs dla materiału
+interface Material extends MaterialSpec {
+  id: number;
+  nazwa: string;
+  cena_za_m2: number;
+}
+
+// Tymczasowa definicja materiałów - zastąp importem z Data/materials gdy będzie dostępny
+const materials: Material[] = [
+  { id: 1, nazwa: 'Plexi 3mm', cena_za_m2: 120, name: 'Plexi 3mm', pricePerM2: 120, density: 1190 },
+  { id: 2, nazwa: 'Plexi 5mm', cena_za_m2: 180, name: 'Plexi 5mm', pricePerM2: 180, density: 1190 },
+  { id: 3, nazwa: 'Plexi 8mm', cena_za_m2: 280, name: 'Plexi 8mm', pricePerM2: 280, density: 1190 },
+  { id: 4, nazwa: 'Plexi 10mm', cena_za_m2: 350, name: 'Plexi 10mm', pricePerM2: 350, density: 1190 },
+  { id: 5, nazwa: 'Dibond 3mm', cena_za_m2: 150, name: 'Dibond 3mm', pricePerM2: 150, density: 1500 },
+  { id: 6, nazwa: 'PCV 5mm', cena_za_m2: 100, name: 'PCV 5mm', pricePerM2: 100, density: 1400 },
+];
+
 interface Props {
-  options: GablotaOptionsType;
-  onChange: (options: GablotaOptionsType) => void;
-  dimensions: { width: number; height: number; depth: number };
+  onOptionsChange: (options: GablotaOptionsType) => void;
+  initialOptions?: Partial<GablotaOptionsType>;
 }
 
 export const GablotaOptions: React.FC<Props> = ({
-  options,
-  onChange,
-  dimensions
+  onOptionsChange,
+  initialOptions
 }) => {
+  // Domyślne wymiary
+  const defaultDimensions = { width: 500, height: 400, depth: 300 };
+  
+  const [options, setOptions] = useState<GablotaOptionsType>({
+    material: initialOptions?.material || materials[0],
+    thickness: initialOptions?.thickness || 5,
+    hasBase: initialOptions?.hasBase || false,
+    baseMaterial: initialOptions?.baseMaterial,
+    baseThickness: initialOptions?.baseThickness,
+    partitions: initialOptions?.partitions || {
+      enabled: false,
+      horizontal: 0,
+      vertical: 0
+    },
+    hasBackLighting: initialOptions?.hasBackLighting || false,
+    hasMagneticClosure: initialOptions?.hasMagneticClosure || false,
+    ventilationHoles: initialOptions?.ventilationHoles || 0
+  });
+
+  const [dimensions] = useState(defaultDimensions);
+
+  useEffect(() => {
+    onOptionsChange(options);
+  }, [options]); // Celowo pomijamy onOptionsChange
+
+  const updateOption = (updates: Partial<GablotaOptionsType>) => {
+    setOptions(prev => ({ ...prev, ...updates }));
+  };
+
   // Oblicz koszt podstawy dla podglądu
   const calculateBaseCost = () => {
     if (!options.hasBase || !options.baseMaterial || !options.baseThickness) {
@@ -71,7 +114,7 @@ export const GablotaOptions: React.FC<Props> = ({
           <Checkbox
             label="Dodaj podstawę (dno)"
             checked={options.hasBase}
-            onChange={(checked) => onChange({ ...options, hasBase: checked })}
+            onChange={(checked) => updateOption({ hasBase: checked })}
             description="Podstawa może być wykonana z innego materiału"
             icon={<Layers size={16} />}
           />
@@ -87,10 +130,12 @@ export const GablotaOptions: React.FC<Props> = ({
               >
                 <Select
                   label="Materiał podstawy"
-                  value={options.baseMaterial?.id.toString() || ''}
+                  value={options.baseMaterial?.id?.toString() || ''}
                   onChange={(value) => {
                     const material = materials.find(m => m.id === parseInt(value));
-                    onChange({ ...options, baseMaterial: material });
+                    if (material) {
+                      updateOption({ baseMaterial: material });
+                    }
                   }}
                   options={materials.map(mat => ({
                     value: mat.id.toString(),
@@ -107,7 +152,7 @@ export const GablotaOptions: React.FC<Props> = ({
                     min={1}
                     max={20}
                     value={options.baseThickness || 3}
-                    onChange={(value) => onChange({ ...options, baseThickness: value })}
+                    onChange={(value) => updateOption({ baseThickness: value })}
                     marks={[
                       { value: 1, label: '1' },
                       { value: 5, label: '5' },
@@ -145,8 +190,7 @@ export const GablotaOptions: React.FC<Props> = ({
           <Checkbox
             label="Dodaj przegrody"
             checked={options.partitions.enabled}
-            onChange={(checked) => onChange({
-              ...options,
+            onChange={(checked) => updateOption({
               partitions: { ...options.partitions, enabled: checked }
             })}
             description="Przegrody dzielą przestrzeń gabloty"
@@ -164,8 +208,7 @@ export const GablotaOptions: React.FC<Props> = ({
                 min="0"
                 max="10"
                 value={options.partitions.horizontal.toString()}
-                onChange={(e) => onChange({
-                  ...options,
+                onChange={(e) => updateOption({
                   partitions: {
                     ...options.partitions,
                     horizontal: parseInt(e.target.value) || 0
@@ -180,8 +223,7 @@ export const GablotaOptions: React.FC<Props> = ({
                 min="0"
                 max="10"
                 value={options.partitions.vertical.toString()}
-                onChange={(e) => onChange({
-                  ...options,
+                onChange={(e) => updateOption({
                   partitions: {
                     ...options.partitions,
                     vertical: parseInt(e.target.value) || 0
@@ -203,14 +245,14 @@ export const GablotaOptions: React.FC<Props> = ({
           <Checkbox
             label="Podświetlenie LED"
             checked={options.hasBackLighting}
-            onChange={(checked) => onChange({ ...options, hasBackLighting: checked })}
+            onChange={(checked) => updateOption({ hasBackLighting: checked })}
             description="Taśma LED w górnej części gabloty"
           />
 
           <Checkbox
             label="Zamknięcie magnetyczne"
             checked={options.hasMagneticClosure}
-            onChange={(checked) => onChange({ ...options, hasMagneticClosure: checked })}
+            onChange={(checked) => updateOption({ hasMagneticClosure: checked })}
             description="Magnesy do mocowania frontu"
           />
 
@@ -220,12 +262,12 @@ export const GablotaOptions: React.FC<Props> = ({
               Otwory wentylacyjne
             </label>
             <Input
+              label=""
               type="number"
               min="0"
               max="50"
               value={options.ventilationHoles.toString()}
-              onChange={(e) => onChange({
-                ...options,
+              onChange={(e) => updateOption({
                 ventilationHoles: parseInt(e.target.value) || 0
               })}
               tooltip="Liczba otworów wentylacyjnych (5mm)"

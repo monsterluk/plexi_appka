@@ -10,14 +10,27 @@ import {
   ContainerOptions,
   CabinetOptions,
   EnclosureOptions,
-  ComponentCalculation
+  ImpulsOptions,
+  ComponentCalculation,
+  GablotaOptions,
+  EkspozytorOptions
 } from '../types';
-import { 
-  calculateContainerSurface,
-  calculateCabinetSurface,
-  calculateEnclosureSurface,
-  calculateImpulsSurface
-} from '../utils/surfaceCalculations';
+// Tymczasowe funkcje placeholder - zastąp właściwymi implementacjami
+const calculateContainerSurface = (dimensions: any, options: any) => {
+  return [];
+};
+
+const calculateEnclosureSurface = (dimensions: any, options: any) => {
+  return [];
+};
+
+const calculateImpulsSurface = (dimensions: any, options: any) => {
+  return [];
+};
+
+const calculateCabinetSurface = (dimensions: any, options: any) => {
+  return [];
+};
 import { 
   calculateTotalWeight,
   calculateMixedMaterialsWeight
@@ -28,6 +41,8 @@ import {
   WASTE_PERCENTAGES,
   ADDON_PRICES
 } from '../constants/pricing';
+import { calculateGablota, calculateGablotaAddons } from '../calculators/calculateGablota';
+import { calculateExpVariant } from '../calculators/calculateExpVariant';
 
 interface CalculatorState {
   productType: ProductType;
@@ -40,7 +55,9 @@ interface CalculatorState {
   containerOptions?: ContainerOptions;
   cabinetOptions?: CabinetOptions;
   enclosureOptions?: EnclosureOptions;
-  // ... inne opcje
+  impulsOptions?: ImpulsOptions;
+  gablotaOptions?: GablotaOptions;
+  ekspozytorOptions?: EkspozytorOptions;
   
   // Dodatki
   addons: {
@@ -51,9 +68,53 @@ interface CalculatorState {
   };
 }
 
+interface AddonCalculation {
+  name: string;
+  quantity: number;
+  unit: string;
+  unitPrice: number;
+  totalPrice: number;
+  appliesToMultiplier: boolean;
+}
+
+interface LogisticsCalculation {
+  packaging: {
+    type: string;
+    count: number;
+    cost: number;
+  };
+  delivery: {
+    type: string;
+    cost: number;
+  };
+  totalWeight: number;
+  totalVolume: number;
+}
+
+interface CalculationSummary {
+  productCost: number;
+  logisticsCost: number;
+  totalNetto: number;
+  vat: number;
+  totalBrutto: number;
+}
+
+interface FullCalculationResult {
+  components: ComponentCalculation[];
+  totalMaterial: {
+    surface: number;
+    weight: number;
+    cost: number;
+    wastePercentage: number;
+  };
+  addons: AddonCalculation[];
+  logistics: LogisticsCalculation;
+  summary: CalculationSummary;
+}
+
 export function useCalculatorLogic() {
   const [state, setState] = useState<CalculatorState>({
-    productType: 'plyta',
+    productType: 'formatka',
     material: null,
     thickness: 3,
     dimensions: { width: 1000, height: 500, depth: 0 },
@@ -71,18 +132,29 @@ export function useCalculatorLogic() {
       case 'pojemnik':
         return calculateContainerSurface(dimensions, state.containerOptions!);
         
-     case 'gablota':
-            const gablotaResult = calculateGablota(
-              dimensions,
-              state.gablotaOptions!,
-              state.quantity
-            );
+      case 'gablota':
+        if (state.gablotaOptions) {
+          const gablotaResult = calculateGablota(
+            dimensions,
+            state.gablotaOptions,
+            state.quantity
+          );
+          return gablotaResult.components;
+        }
+        return calculateCabinetSurface(dimensions, state.cabinetOptions!);
         
       case 'obudowa':
         return calculateEnclosureSurface(dimensions, state.enclosureOptions!);
         
       case 'impuls_kasowy':
         return calculateImpulsSurface(dimensions, state.impulsOptions!);
+        
+      case 'ekspozytory':
+        if (state.ekspozytorOptions) {
+          const expResult = calculateExpVariant(dimensions, state.ekspozytorOptions);
+          return expResult.components;
+        }
+        return [];
         
       case 'plyta':
       default:
@@ -132,15 +204,42 @@ export function useCalculatorLogic() {
    * Oblicza koszty dodatków
    */
   const calculateAddonsCosts = useCallback((): AddonCalculation[] => {
-    const { addons, thickness, quantity, dimensions } = state;
+    const { addons, thickness, quantity, dimensions, productType } = state;
     const addonsList: AddonCalculation[] = [];
     const components = calculateComponents();
 
-    const gablotaAddons = calculateGablotaAddons(
-        state.gablotaOptions!,
+    // Dodatki specyficzne dla produktu
+    if (productType === 'gablota' && state.gablotaOptions) {
+      const gablotaAddons = calculateGablotaAddons(
+        state.gablotaOptions,
         dimensions,
-        state.quantity
-      );    
+        quantity
+      );
+      gablotaAddons.forEach(addon => {
+        addonsList.push({
+          name: addon.name,
+          quantity: addon.quantity,
+          unit: addon.name.includes('LED') ? 'm' : 'szt',
+          unitPrice: addon.unitPrice,
+          totalPrice: addon.totalPrice,
+          appliesToMultiplier: false
+        });
+      });
+    }
+
+    if (productType === 'ekspozytory' && state.ekspozytorOptions) {
+      const expResult = calculateExpVariant(dimensions, state.ekspozytorOptions);
+      expResult.additionalElements.forEach(element => {
+        addonsList.push({
+          name: element.name,
+          quantity: element.quantity,
+          unit: 'szt',
+          unitPrice: element.unitCost,
+          totalPrice: element.totalCost,
+          appliesToMultiplier: false
+        });
+      });
+    }
     
     // Wiercenie otworów
     if (addons.drilling?.enabled && addons.drilling.holesCount > 0) {
@@ -157,7 +256,7 @@ export function useCalculatorLogic() {
     // Polerowanie krawędzi
     if (addons.edgePolishing?.enabled) {
       const edgeLength = addons.edgePolishing.customLength || 
-                        calculateTotalEdgeLength(components, state.productType, state);
+                        calculateTotalEdgeLength(components, productType, state);
       const totalLength = edgeLength * quantity;
       const cost = Math.max(totalLength * ADDON_PRICES.polerowanie, 9); // Min 9 zł
       
@@ -173,7 +272,7 @@ export function useCalculatorLogic() {
     
     // Gięcie na gorąco
     if (addons.bending?.enabled && addons.bending.length > 0) {
-      const bendingPrice = ADDON_PRICES.giecieNaGoraco[thickness] || 0;
+      const bendingPrice = ADDON_PRICES.giecieNaGoraco[thickness as keyof typeof ADDON_PRICES.giecieNaGoraco] || 0;
       
       addonsList.push({
         name: 'Gięcie na gorąco',
@@ -201,25 +300,13 @@ export function useCalculatorLogic() {
       });
     }
     
-    return {
-        components: gablotaResult.components,
-        totalMaterial: {
-          surface: gablotaResult.totalSurface,
-          weight: gablotaResult.totalWeight,
-          cost: gablotaResult.totalCost,
-          wastePercentage: 0.08
-        },
-        addons: gablotaAddons.map(addon => ({
-          ...addon,
-          unit: addon.name.includes('LED') ? 'm' : 'szt',
-          appliesToMultiplier: false
-        }))
-      };
+    return addonsList;
+  }, [state, calculateComponents]);
 
   /**
    * Główna funkcja kalkulacyjna
    */
-  const calculate = useCallback((): CalculationResult => {
+  const calculate = useCallback((): FullCalculationResult => {
     const components = calculateComponents();
     
     // Oblicz wagę
@@ -283,13 +370,13 @@ export function useCalculatorLogic() {
   function getProductMultiplier(productType: ProductType, state: CalculatorState): number {
     const multipliers = PROFIT_MULTIPLIERS[productType];
     
-    if (typeof multipliers === 'object') {
+    if (typeof multipliers === 'object' && productType === 'ekspozytory') {
       // Dla ekspozytorów
-      const displayType = state.displayOptions?.type || 'podstawkowy';
-      return multipliers[displayType] || 1;
+      const ekspozytorType = state.ekspozytorOptions?.subtype || 'podstawkowy';
+      return multipliers[ekspozytorType] || 1;
     }
     
-    return multipliers || 1;
+    return typeof multipliers === 'number' ? multipliers : 1;
   }
 
   /**

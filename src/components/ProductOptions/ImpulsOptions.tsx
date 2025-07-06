@@ -149,7 +149,7 @@ export function ImpulsOptions({ options, onChange }: Props) {
         </svg>
       </div>
       
-      <style jsx>{`
+      <style>{`
         .impuls-options {
           background: #f8f9fa;
           padding: 20px;

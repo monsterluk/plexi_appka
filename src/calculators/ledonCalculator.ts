@@ -19,37 +19,39 @@ const LEDON_MULTIPLIER = 5;
 
 export function calculateLedon(options: LedonOptions): CalculationResult {
   // Powierzchnia w m²
-  const surface = (options.size.width * options.size.height * options.quantity) / 1_000_000;
+  const surface = (options.width * options.height * options.quantity) / 1_000_000;
   
   // Koszt plexi z mnożnikiem LEDON
-  const plexiCost = surface * PLEXI_PRICES[options.plexiType] * 3 * LEDON_MULTIPLIER; // 3mm grubość
+  const plexiCost = surface * PLEXI_PRICES[options.plexiType as keyof typeof PLEXI_PRICES] * 3 * LEDON_MULTIPLIER; // 3mm grubość
   
   // Szacowana długość LED na podstawie tekstu
   const estimatedLedLength = options.text.length * 0.15; // ~15cm na znak
-  const ledCost = estimatedLedLength * LED_PRICES[options.ledColor];
+  const ledColor = options.lighting?.color || 'white';
+  const ledCost = estimatedLedLength * (LED_PRICES[ledColor as keyof typeof LED_PRICES] || LED_PRICES.white);
   
   // Koszty dodatkowe
   let additionalCost = 0;
   const breakdown: { [key: string]: number } = {};
   
-  if (options.features.waterproof) {
+  if (options.features?.waterproof) {
     additionalCost += (plexiCost + ledCost) * 0.2; // +20%
     breakdown.waterproof = (plexiCost + ledCost) * 0.2;
   }
   
-  if (options.features.dimmer) {
+  if (options.features?.dimmer) {
     additionalCost += 150;
     breakdown.dimmer = 150;
   }
   
-  if (options.features.remoteControl) {
+  if (options.features?.remoteControl) {
     additionalCost += 200;
     breakdown.remoteControl = 200;
   }
   
   // Montaż
-  const mountingCost = options.features.mounting === 'wall' ? 100 : 
-                      options.features.mounting === 'hanging' ? 150 : 200;
+  const mountingType = options.features?.mounting || 'wall';
+  const mountingCost = mountingType === 'wall' ? 100 : 
+                      mountingType === 'hanging' ? 150 : 200;
   additionalCost += mountingCost;
   breakdown.mounting = mountingCost;
   

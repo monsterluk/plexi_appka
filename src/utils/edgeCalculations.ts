@@ -19,7 +19,9 @@ export function calculateTotalEdgeLength(
     
     // Liczymy tylko krawędzie dla istniejących ścian
     components.forEach(component => {
-      totalLength += component.edgeLength;
+      if (component.edgeLength) {
+        totalLength += component.edgeLength;
+      }
     });
     
     return totalLength;
@@ -30,20 +32,20 @@ export function calculateTotalEdgeLength(
     // Suma wszystkich krawędzi komponentów
     return components
       .filter(c => c.type !== 'partition') // Przegrody mogą nie wymagać polerowania
-      .reduce((total, component) => total + component.edgeLength, 0);
+      .reduce((total, component) => total + (component.edgeLength || 0), 0);
   }
   
   // Dla gabloty - bez frontu
   if (productType === 'gablota') {
     return components
       .filter(c => c.name !== 'Przód' && c.type !== 'partition')
-      .reduce((total, component) => total + component.edgeLength, 0);
+      .reduce((total, component) => total + (component.edgeLength || 0), 0);
   }
   
   // Dla ekspozytorów - zależy od typu
   if (productType === 'ekspozytory') {
     // Półki z otworami mają dodatkowe krawędzie wewnętrzne
-    let baseLength = components.reduce((total, component) => total + component.edgeLength, 0);
+    let baseLength = components.reduce((total, component) => total + (component.edgeLength || 0), 0);
     
     // Dodaj krawędzie otworów jeśli są
     if (options?.holesCount) {
@@ -55,7 +57,7 @@ export function calculateTotalEdgeLength(
   }
   
   // Domyślnie - suma wszystkich krawędzi
-  return components.reduce((total, component) => total + component.edgeLength, 0);
+  return components.reduce((total, component) => total + (component.edgeLength || 0), 0);
 }
 
 /**

@@ -1,10 +1,17 @@
 // calculators/displayCalculator.ts
 
-import { DisplayOptions } from '../types';
+import { ComponentCalculation, CalculationResult } from '../types/calculator.types';
+import { DisplayOptions } from '../types/product.types';
+
+// Placeholder funkcje (tymczasowo)
+const calculatePodstawkowy = (dimensions: any, options: any): ComponentCalculation[] => [];
+const calculateSchodkowy = (dimensions: any, options: any): ComponentCalculation[] => [];
+const calculateZHaczykami = (dimensions: any, options: any): ComponentCalculation[] => [];
+const calculateKosmetyczny = (dimensions: any, options: any): ComponentCalculation[] => [];
 
 export function calculateDisplay(
   dimensions: { width: number; height: number; depth: number },
-  options: DisplayOptions,
+  options: DisplayOptions & { thickness?: number; graphics?: 'none' | 'single' | 'double' },
   material: { pricePerM2: number }
 ) {
   const multipliers = {
@@ -39,7 +46,8 @@ export function calculateDisplay(
   }
   
   const totalSurface = components.reduce((sum, c) => sum + c.surface, 0);
-  const materialCost = totalSurface * material.pricePerM2 * options.thickness * 
+  const thickness = options.thickness || 3; // domyślnie 3mm
+  const materialCost = totalSurface * material.pricePerM2 * thickness * 
                       multipliers[options.type] * 1.12; // +12% odpad
   
   // Grafika (bez mnożnika)

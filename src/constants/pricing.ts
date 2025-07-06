@@ -1,63 +1,61 @@
-// Pricing constants for plexi_appka
+export const BENDING_PRICES = {
+  3: 5,  // 5 zł/mb dla 3mm
+  4: 6,  // 6 zł/mb dla 4mm
+  5: 7   // 7 zł/mb dla 5mm
+} as const;
 
-// constants/pricing.ts
+export const IMPULS_LIMITER_HEIGHT = 100; // domyślna wysokość ogranicznika w mm
 
-export const MATERIAL_DENSITIES: Record<string, number> = {
-    'PET-G': 1270,
-    'Plexi': 1190,
-    'Poliwęglan': 1200,
-    'Dibond': 1500,
-    'HIPS': 1050,
-    'PCV': 1400,
-    'default': 1200
-  };
-  
-  export const PROFIT_MULTIPLIERS: Record<string, number | Record<string, number>> = {
-    plyta: 1.8,
-    pojemnik: 1.85,
-    gablota: 1.85,
-    obudowa: 1.8,
-    kaseton: 1.0, // już zawiera marżę
-    ledon: 5.0,
-    ekspozytory: {
-      podstawkowy: 2.2,
-      schodkowy: 2.5,
-      z_haczykami: 2.4,
-      wiszacy: 2.2,
-      stojak: 2.5,
-      kosmetyczny: 2.7
-    },
-    impuls_kasowy: 1.8
-  };
-  
-  export const WASTE_PERCENTAGES: Record<string, number> = {
-    plyta: 0.05,      // 5%
-    pojemnik: 0.08,   // 8%
-    gablota: 0.08,    // 8%
-    obudowa: 0.08,    // 8%
-    ekspozytory: 0.12, // 12%
-    default: 0.05
-  };
-  
-  export const ADDON_PRICES = {
-    wiercenie: 2.0,        // zł/otwór
-    fazowanie: 6.0,        // zł/mb
-    polerowanie: 9.0,      // zł/mb
-    grafikaLatex: 75.0,    // zł/m²
-    grawerowanie: 100.0,   // zł/h
-    giecieNaGoraco: {      // zł/mb wg grubości
-      1.5: 2,
-      2: 4,
-      3: 5,
-      4: 7,
-      5: 10,
-      6: 20,
-      8: 40,
-      10: 80,
-      12: 100,
-      15: 125,
-      20: 155
-    }
-  };
-  
-  export const IMPULS_LIMITER_HEIGHT = 60; // mm - wysokość ogranicznika na półkach
+export const PROFIT_MULTIPLIERS = {
+  default: 1.5,
+  small: 1.3,
+  large: 1.7,
+  premium: 2.0
+} as const;
+
+export const WASTE_PERCENTAGES = {
+  standard: 0.05,  // 5% odpadu
+  complex: 0.10,   // 10% dla skomplikowanych kształtów
+  minimal: 0.03    // 3% dla prostych formatek
+} as const;
+
+export const ADDON_PRICES = {
+  drilling: 2.5,        // za otwór
+  polishing: 15,        // za mb
+  engraving: 50,        // za dm²
+  mounting: 25,         // za komplet
+  packaging: 10,        // za sztukę
+  express: 0.3,         // mnożnik dla trybu ekspres
+  customColor: 100      // dopłata za kolor niestandardowy
+} as const;
+
+export const MATERIAL_DENSITIES = {
+  plexi: 1190,          // kg/m³
+  plexiXT: 1190,
+  plexiGS: 1180,
+  petg: 1270,
+  pc: 1200,
+  pvc: 1380
+} as const;
+
+export const MATERIAL_PRICES = {
+  plexi_clear: 30,      // zł/m² dla 1mm
+  plexi_white: 35,
+  plexi_colored: 40,
+  petg: 45,
+  pc: 60,
+  pvc: 25
+} as const;
+
+export const THICKNESS_MULTIPLIERS = {
+  2: 2.0,
+  3: 3.0,
+  4: 4.0,
+  5: 5.0,
+  6: 6.2,
+  8: 8.5,
+  10: 11.0,
+  12: 13.5,
+  15: 17.0,
+  20: 23.0
+} as const;

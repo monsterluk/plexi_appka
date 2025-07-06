@@ -10,7 +10,7 @@ import {
   ImpulsOptions,
   KasetonOptions,
   LedonOptions
-} from '../types';
+} from '../types/product.types';
 import { EkspozytorOptions } from '../types/ekspozytory.types';
 
 interface ProductSpecificState {
@@ -73,7 +73,7 @@ export function useProductSpecific(productType: ProductType) {
 
       case 'ekspozytory':
         setState({
-          ekspozytorOptions: null // Będzie ustawione po wyborze podtypu
+          ekspozytorOptions: undefined // Będzie ustawione po wyborze podtypu
         });
         break;
 
@@ -93,7 +93,10 @@ export function useProductSpecific(productType: ProductType) {
           kasetonOptions: {
             type: 'plexi',
             letterType: 'podklejone',
-            lighting: { type: 'none' }
+            lighting: { type: 'none' },
+            width: 1000,
+            height: 500,
+            quantity: 1
           }
         });
         break;
@@ -102,9 +105,11 @@ export function useProductSpecific(productType: ProductType) {
         setState({
           ledonOptions: {
             plexiType: 'clear',
-            thickness: 3,
-            ledType: 'standard',
             ledLength: 5,
+            text: 'LEDON',
+            width: 600,
+            height: 200,
+            quantity: 1,
             features: {
               rgb: false,
               waterproof: false,
@@ -214,7 +219,7 @@ export function useProductSpecific(productType: ProductType) {
         break;
 
       case 'impuls_kasowy':
-        if (state.impulsOptions?.shelvesCount < 2) {
+        if (state.impulsOptions && state.impulsOptions.shelvesCount < 2) {
           errors.push('Impuls kasowy musi mieć minimum 2 półki');
         }
         break;
@@ -283,7 +288,7 @@ export function useProductSpecific(productType: ProductType) {
 
       case 'gablota':
         fields.push('material', 'thickness', 'customBase', 'partitions');
-        if (state.cabinetOptions?.customBase.enabled) {
+        if (state.cabinetOptions?.customBase?.enabled) {
           fields.push('baseMaterial', 'baseThickness');
         }
         break;
@@ -298,7 +303,7 @@ export function useProductSpecific(productType: ProductType) {
 
       case 'kaseton':
         fields.push('type', 'letterType', 'lighting');
-        if (state.kasetonOptions?.lighting.type !== 'none') {
+        if (state.kasetonOptions?.lighting?.type !== 'none') {
           fields.push('lightingPower');
         }
         break;

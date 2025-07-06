@@ -1,39 +1,30 @@
-// types/impuls.types.ts
-
-import { MaterialSpec } from './calculator.types';
-
 export interface ImpulsKasowyOptions {
-  // Materiał
   plexiType: 'clear' | 'white';
-  thickness: number; // 1-20 mm
-  
-  // Konstrukcja
-  shelvesCount: number; // min. 2
-  limiterHeight: number; // domyślnie 60 mm
-  
-  // Grafika
+  thickness: 3 | 4 | 5;
+  shelvesCount: number;
+  limiterHeight: number;
   graphics: {
     enabled: boolean;
-    type: 'none' | 'single' | 'double';
-    coverage: 'back-only' | 'full'; // tylko plecy lub cała konstrukcja
+    type: 'single' | 'double' | 'none';
+    coverage: 'back-only' | 'back-and-sides';
   };
-  
-  // Opcje dodatkowe
   features: {
-    reinforcedShelves: boolean; // wzmocnione półki
-    roundedCorners: boolean; // zaokrąglone rogi
-    antiSlipStrips: boolean; // paski antypoślizgowe na półkach
-    customLimiterHeight: boolean; // niestandardowa wysokość ogranicznika
+    reinforcedShelves: boolean;
+    roundedCorners: boolean;
+    antiSlipStrips: boolean;
+    customLimiterHeight: boolean;
   };
 }
 
+export interface ImpulsComponent {
+  name: string;
+  type: 'wall' | 'shelf' | 'limiter';
+  surface: number;
+  bendingLength?: number;
+}
+
 export interface ImpulsCalculationResult {
-  components: Array<{
-    name: string;
-    type: 'wall' | 'shelf' | 'limiter';
-    surface: number;
-    bendingLength?: number; // dla ograniczników
-  }>;
+  components: ImpulsComponent[];
   materialCost: number;
   graphicsCost: number;
   bendingCost: number;
@@ -43,4 +34,6 @@ export interface ImpulsCalculationResult {
     limiterHeight: number;
     totalDepthWithLimiter: number;
   };
+  totalSurface: number;
+  totalWeight: number;
 }

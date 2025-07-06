@@ -1,0 +1,474 @@
+/* ELEGANCKI DARK MODE Z CZYTELNYMI KAFELKAMI */
+
+/* Główne tło - jasno szare dla kontrastu z białymi kafelkami */
+body, html, #root {
+  background-color: #f3f4f6 !important;
+  color: #1a1a2e !important;
+  font-size: 16px !important;
+  line-height: 1.6 !important;
+  min-height: 100vh !important;
+}
+
+/* Alternatywnie - gradient dla nowoczesnego wyglądu */
+body {
+  background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%) !important;
+  background-attachment: fixed !important;
+}
+
+/* Kafelki/Karty - jasne z dobrym kontrastem */
+.card, 
+.product-card,
+.calculator-section,
+[class*="card"],
+.form-section,
+.results-section {
+  background-color: #ffffff !important;
+  color: #1a1a2e !important;
+  border-radius: 12px !important;
+  padding: 24px !important;
+  margin: 16px 0 !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1), 0 4px 16px rgba(0, 0, 0, 0.08) !important;
+  border: 1px solid #e5e7eb !important;
+  transition: all 0.3s ease !important;
+}
+
+.card:hover,
+.product-card:hover,
+[class*="card"]:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), 0 8px 24px rgba(0, 0, 0, 0.12) !important;
+  transform: translateY(-2px) !important;
+}
+
+/* Alternatywne kafelki - ciemne z jasnym tekstem */
+.dark-card {
+  background-color: #2d2d44 !important;
+  color: #ffffff !important;
+  border: 1px solid #3d3d5c !important;
+}
+
+/* Nagłówki - większe i bardziej czytelne */
+h1, h2, h3, h4, h5, h6 {
+  color: #1a1a2e !important;
+  font-weight: 700 !important;
+  margin-bottom: 20px !important;
+}
+
+h1 { font-size: 36px !important; }
+h2 { font-size: 28px !important; }
+h3 { font-size: 22px !important; }
+h4 { font-size: 18px !important; }
+
+/* Tekst w kafelkach */
+.card h1, .card h2, .card h3, .card h4, .card h5, .card h6,
+.card p, .card span, .card div, .card label {
+  color: #1a1a2e !important;
+}
+
+/* Formularze - czytelne */
+input, select, textarea {
+  background-color: #f8f9fa !important;
+  color: #1a1a2e !important;
+  border: 2px solid #e0e0e0 !important;
+  padding: 12px 16px !important;
+  font-size: 16px !important;
+  border-radius: 8px !important;
+  width: 100% !important;
+  margin: 8px 0 !important;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: #4a7c7e !important;
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(74, 124, 126, 0.2) !important;
+}
+
+/* Etykiety formularzy */
+label {
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  margin-bottom: 8px !important;
+  display: block !important;
+}
+
+/* Przyciski - wyróżniające się */
+button, .btn, [class*="button"] {
+  background-color: #4a7c7e !important;
+  color: white !important;
+  border: none !important;
+  padding: 14px 28px !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  text-transform: uppercase !important;
+  letter-spacing: 1px !important;
+}
+
+button:hover, .btn:hover {
+  background-color: #5a8c8e !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(74, 124, 126, 0.4) !important;
+}
+
+/* Sekcja wyników - wyróżniona */
+.results, .price-display, .calculation-result {
+  background-color: #4a7c7e !important;
+  color: white !important;
+  padding: 32px !important;
+  border-radius: 12px !important;
+  font-size: 28px !important;
+  font-weight: bold !important;
+  text-align: center !important;
+  margin: 24px 0 !important;
+  box-shadow: 0 4px 20px rgba(74, 124, 126, 0.3) !important;
+}
+
+/* Tabele */
+table {
+  background-color: #ffffff !important;
+  color: #1a1a2e !important;
+  width: 100% !important;
+  border-radius: 8px !important;
+  overflow: hidden !important;
+}
+
+th {
+  background-color: #4a7c7e !important;
+  color: white !important;
+  padding: 16px !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+}
+
+td {
+  padding: 14px !important;
+  font-size: 15px !important;
+  border-bottom: 1px solid #e0e0e0 !important;
+}
+
+/* Lista produktów */
+.product-list, .option-list {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)) !important;
+  gap: 20px !important;
+  margin: 20px 0 !important;
+}
+
+/* Wizualizacja produktu */
+.product-visualization {
+  background-color: #2d2d44 !important;
+  border-radius: 12px !important;
+  padding: 24px !important;
+  margin: 20px 0 !important;
+}
+
+/* Nawigacja */
+.nav, .navigation, header {
+  background-color: #ffffff !important;
+  padding: 20px !important;
+  border-bottom: 1px solid #e5e7eb !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+}
+
+.nav a, .navigation a {
+  color: #1a1a2e !important;
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  margin: 0 16px !important;
+}
+
+/* Stopka */
+footer {
+  background-color: #ffffff !important;
+  color: #1a1a2e !important;
+  padding: 40px 20px !important;
+  margin-top: 60px !important;
+  border-top: 1px solid #e5e7eb !important;
+}
+
+/* Animacje */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.card, .product-card {
+  animation: fadeIn 0.5s ease-out !important;
+}
+
+/* Responsywność */
+@media (max-width: 768px) {
+  h1 { font-size: 28px !important; }
+  h2 { font-size: 22px !important; }
+  h3 { font-size: 18px !important; }
+  
+  .card {
+    padding: 16px !important;
+    margin: 12px 0 !important;
+  }
+  
+  button {
+    width: 100% !important;
+    padding: 16px !important;
+  }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 12px !important;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a2e !important;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #4a7c7e !important;
+  border-radius: 6px !important;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #5a8c8e !important;
+}
+
+/* Specjalne style dla ProductSelector */
+[class*="ProductSelector"], [class*="productSelector"] {
+  background-color: transparent !important;
+}
+
+[class*="ProductTile"], [class*="productTile"], [class*="tile"] {
+  background-color: #ffffff !important;
+  color: #1a1a2e !important;
+  border-radius: 12px !important;
+  padding: 20px !important;
+  margin: 10px !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2) !important;
+}
+
+[class*="ProductTile"]:hover, [class*="productTile"]:hover {
+  transform: translateY(-4px) !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Style dla sekcji opcji produktu */
+[class*="options"], [class*="Options"] {
+  background-color: #ffffff !important;
+  color: #1a1a2e !important;
+  padding: 24px !important;
+  border-radius: 12px !important;
+  margin: 16px 0 !important;
+}
+
+/* Style dla głównego kontenera */
+[class*="Calculator"], [class*="calculator"] {
+  background-color: transparent !important;
+  padding: 20px !important;
+}
+
+/* Napraw kolory dla komponentów */
+[class*="container"] h1,
+[class*="container"] h2,
+[class*="container"] h3 {
+  color: #1a1a2e !important;
+}
+
+/* Sekcje formularzy w kafelkach */
+[class*="section"] {
+  background-color: #ffffff !important;
+  color: #1a1a2e !important;
+  padding: 20px !important;
+  border-radius: 8px !important;
+  margin-bottom: 16px !important;
+}
+
+/* Wyniki kalkulacji - bardziej wyróżnione */
+[class*="Results"], [class*="results"] {
+  background: linear-gradient(135deg, #4a7c7e 0%, #5a8c8e 100%) !important;
+  color: white !important;
+  padding: 32px !important;
+  border-radius: 16px !important;
+  box-shadow: 0 8px 32px rgba(74, 124, 126, 0.4) !important;
+}
+
+/* Ceny - duże i czytelne */
+[class*="price"], [class*="Price"] {
+  font-size: 32px !important;
+  font-weight: 700 !important;
+  color: #4a7c7e !important;
+}
+
+/* W białych kafelkach ceny ciemne */
+.card [class*="price"], .card [class*="Price"] {
+  color: #1a1a2e !important;
+}
+
+/* POPRAWKA DLA KAFELKÓW PRODUKTÓW */
+.product-tile,
+.product-selector-tile,
+[class*="product"][class*="tile"],
+[class*="Product"][class*="Tile"],
+.product-grid > div,
+.product-selector > div > div {
+  background-color: #ffffff !important;
+  color: #1a1a2e !important;
+  padding: 30px !important;
+  border-radius: 16px !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15) !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  min-height: 120px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+  text-align: center !important;
+}
+
+/* Hover effect dla kafelków */
+.product-tile:hover,
+.product-selector-tile:hover,
+[class*="product"][class*="tile"]:hover {
+  transform: translateY(-4px) !important;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2) !important;
+  background-color: #f8f9fa !important;
+}
+
+/* Ikony w kafelkach */
+.product-tile svg,
+.product-selector-tile svg,
+[class*="product"][class*="tile"] svg {
+  width: 48px !important;
+  height: 48px !important;
+  margin-bottom: 12px !important;
+  color: #4a7c7e !important;
+}
+
+/* Tekst w kafelkach */
+.product-tile h3,
+.product-tile h4,
+.product-tile p,
+[class*="product"][class*="tile"] h3,
+[class*="product"][class*="tile"] h4,
+[class*="product"][class*="tile"] p {
+  color: #1a1a2e !important;
+  margin: 8px 0 !important;
+}
+
+.product-tile h3,
+[class*="product"][class*="tile"] h3 {
+  font-size: 20px !important;
+  font-weight: 700 !important;
+}
+
+.product-tile p,
+[class*="product"][class*="tile"] p {
+  font-size: 14px !important;
+  color: #666 !important;
+}
+
+/* Grid dla produktów */
+.product-grid,
+.product-selector-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)) !important;
+  gap: 24px !important;
+  padding: 24px 0 !important;
+}
+
+/* Nagłówek kalkulatora */
+.calculator-header {
+  text-align: center !important;
+  padding: 40px 0 !important;
+}
+
+.calculator-header h1 {
+  font-size: 42px !important;
+  background: linear-gradient(135deg, #4a7c7e 0%, #5a8c8e 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  margin-bottom: 16px !important;
+}
+
+/* Container główny */
+.main-container,
+.calculator-container {
+  max-width: 1400px !important;
+  margin: 0 auto !important;
+  padding: 24px !important;
+}
+
+/* STYLE DLA CSS MODULES - ProductSelector */
+[class*="tile_"] {
+  background-color: #ffffff !important;
+  color: #1a1a2e !important;
+}
+
+[class*="tileContent_"] {
+  background-color: #ffffff !important;
+  border: 2px solid #e0e0e0 !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1) !important;
+}
+
+[class*="tileContent_"]:hover {
+  border-color: #4a7c7e !important;
+  transform: translateY(-4px) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15) !important;
+}
+
+[class*="content_"] {
+  color: #1a1a2e !important;
+}
+
+[class*="title_"] {
+  color: #1a1a2e !important;
+  font-size: 20px !important;
+  font-weight: 700 !important;
+}
+
+[class*="description_"] {
+  color: #666666 !important;
+  font-size: 14px !important;
+}
+
+[class*="iconContainer_"] {
+  background-color: rgba(74, 124, 126, 0.1) !important;
+}
+
+[class*="iconContainer_"] svg {
+  color: #4a7c7e !important;
+}
+
+/* Grid produktów */
+[class*="grid_"] {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
+  gap: 24px !important;
+  padding: 24px 0 !important;
+}
+
+/* Nagłówek */
+[class*="header_"] {
+  text-align: center !important;
+  padding: 40px 0 20px 0 !important;
+}
+
+[class*="title_"][class*="header"] {
+  font-size: 42px !important;
+  background: linear-gradient(135deg, #4a7c7e 0%, #5a8c8e 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+/* Napraw zmienne CSS */
+:root {
+  --color-bg-secondary: #ffffff !important;
+  --color-bg-tertiary: #f8f9fa !important;
+  --color-text-primary: #1a1a2e !important;
+  --color-text-secondary: #666666 !important;
+  --color-accent-orange: #4a7c7e !important;
+  --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.1) !important;
+  --shadow-xl: 0 8px 24px rgba(0, 0, 0, 0.15) !important;
+}

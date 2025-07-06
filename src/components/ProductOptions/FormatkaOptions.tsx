@@ -1,5 +1,5 @@
 // components/ProductOptions/FormatkaOptions.tsx
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { FormatkaOptions as FormatkaOptionsType } from '../../types/product.types';
 import { Package, Ruler, Layers, Sparkles, AlertCircle } from 'lucide-react';
@@ -41,26 +41,29 @@ export const FormatkaOptions: React.FC<FormatkaOptionsProps> = ({
   // Automatyczne kalkulacje przy zmianach
   useCalculation('formatka', options, calculateFormatka);
 
-  useEffect(() => {
-    validateOptions();
-    onOptionsChange(options);
-  }, [options, onOptionsChange]);
-
-  const validateOptions = () => {
+  const validateOptions = useCallback(() => {
     const newErrors: Record<string, string> = {};
 
-    if (options.width < 10 || options.width > 3000) {
+    if ((options.width ?? 0) < 10 || (options.width ?? 0) > 3000) {
       newErrors.width = 'Szerokość musi być między 10-3000 mm';
     }
-    if (options.height < 10 || options.height > 3000) {
+    if ((options.height ?? 0) < 10 || (options.height ?? 0) > 3000) {
       newErrors.height = 'Wysokość musi być między 10-3000 mm';
     }
-    if (options.thickness < 1 || options.thickness > 20) {
+    if ((options.thickness ?? 0) < 1 || (options.thickness ?? 0) > 20) {
       newErrors.thickness = 'Grubość musi być między 1-20 mm';
     }
 
     setErrors(newErrors);
-  };
+  }, [options.width, options.height, options.thickness]);
+
+  useEffect(() => {
+    validateOptions();
+  }, [validateOptions]);
+
+  useEffect(() => {
+    onOptionsChange(options);
+  }, [options]); // Celowo pomijamy onOptionsChange aby uniknąć nieskończonej pętli
 
   const updateOption = (key: keyof FormatkaOptionsType, value: any) => {
     setOptions(prev => ({ ...prev, [key]: value }));
@@ -272,8 +275,8 @@ export const FormatkaOptions: React.FC<FormatkaOptionsProps> = ({
             <motion.rect
               x="50"
               y="50"
-              width={300 * (options.width / Math.max(options.width, options.height))}
-              height={200 * (options.height / Math.max(options.width, options.height))}
+              width={300 * ((options.width ?? 100) / Math.max(options.width ?? 100, options.height ?? 100))}
+              height={200 * ((options.height ?? 100) / Math.max(options.width ?? 100, options.height ?? 100))}
               fill="none"
               stroke="#3B82F6"
               strokeWidth="2"
@@ -342,8 +345,8 @@ export const FormatkaOptions: React.FC<FormatkaOptionsProps> = ({
             </label>
             <input
               type="number"
-              value={options.finishing.drillHoles}
-              onChange={(e) => updateFinishing('drillHoles', parseInt(e.target.value) || 0)}
+              value={options.finishing?.drillHoles || 0}
+              onChange={(e) => updateFinishing('drillHoles' as any, parseInt(e.target.value) || 0)}
               className="w-32 px-4 py-2 rounded-lg border-2 border-gray-300 dark:border-gray-600 
                        bg-white dark:bg-gray-700 text-gray-900 dark:text-white
                        focus:border-blue-500 focus:outline-none transition-colors"

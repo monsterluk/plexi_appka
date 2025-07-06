@@ -158,7 +158,7 @@ export function Container3D({ dimensions, options, productType }: Props) {
         )}
       </div>
       
-      <style jsx>{`
+      <style>{`
         .container-3d {
           background: white;
           padding: 20px;

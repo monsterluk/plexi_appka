@@ -209,7 +209,7 @@ import {
   
     // Obliczenia końcowe
     const totalSurface = components.reduce((sum, c) => sum + c.surface, 0) * quantity;
-    const totalWeight = components.reduce((sum, c) => sum + c.weight, 0) * quantity;
+    const totalWeight = components.reduce((sum, c) => sum + (c.weight || 0), 0) * quantity;
     
     // Koszt materiału z odpadem i mnożnikiem
     const materialCost = totalSurface * 

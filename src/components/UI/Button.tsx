@@ -23,19 +23,21 @@ export const Button: React.FC<ButtonProps> = ({
   disabled,
   ...props
 }) => {
+  const sizeClass = size === 'sm' ? 'small' : size === 'lg' ? 'large' : 'medium';
+  
   return (
     <motion.button
       className={`
         ${styles.button} 
         ${styles[variant]} 
-        ${styles[size]} 
+        ${styles[sizeClass]} 
         ${fullWidth ? styles.fullWidth : ''} 
         ${className}
       `}
       whileHover={{ scale: disabled || loading ? 1 : 1.02 }}
       whileTap={{ scale: disabled || loading ? 1 : 0.98 }}
       disabled={disabled || loading}
-      {...props}
+      {...props as any}
     >
       {loading ? (
         <div className={styles.loader}>

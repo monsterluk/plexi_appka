@@ -1,6 +1,6 @@
 // components/ProductOptions/Obudowa/ObudowaOptions.tsx
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ObudowaOptions as ObudowaOptionsType } from '../../../types/obudowa.types';
 import { MaterialSpec } from '../../../types/calculator.types';
@@ -15,32 +15,80 @@ import {
   Cable, 
   DoorOpen, 
   Square, 
-  Handle,
-  Fan
+  Hand,
+  Fan,
+  AlertTriangle
 } from 'lucide-react';
-import { materials } from '../../../data/materials';
+import { materials } from '../../../Data/materials';
 import styles from './ObudowaOptions.module.css';
 
 interface Props {
-  options: ObudowaOptionsType;
-  onChange: (options: ObudowaOptionsType) => void;
-  dimensions: { width: number; height: number; depth: number };
+  onOptionsChange: (options: ObudowaOptionsType) => void;
+  initialOptions?: Partial<ObudowaOptionsType>;
 }
 
 export const ObudowaOptions: React.FC<Props> = ({
-  options,
-  onChange,
-  dimensions
+  onOptionsChange,
+  initialOptions
 }) => {
+  // Domyślne wymiary
+  const defaultDimensions = { width: 400, height: 300, depth: 200 };
+  
+  // Domyślny materiał
+  const defaultMaterial = materials[0] || {
+    id: 1,
+    nazwa: 'Plexi 3mm',
+    cena_za_m2: 120,
+    name: 'Plexi 3mm',
+    pricePerM2: 120,
+    density: 1190
+  };
+
+  const [options, setOptions] = useState<ObudowaOptionsType>({
+    walls: initialOptions?.walls || {
+      front: { enabled: true, material: null, thickness: null, hasVentilation: false, hasCableHoles: false },
+      back: { enabled: true, material: null, thickness: null, hasVentilation: false, hasCableHoles: false },
+      left: { enabled: true, material: null, thickness: null, hasVentilation: false, hasCableHoles: false },
+      right: { enabled: true, material: null, thickness: null, hasVentilation: false, hasCableHoles: false },
+      top: { enabled: false, material: null, thickness: null, hasVentilation: false, hasCableHoles: false },
+      bottom: { enabled: false, material: null, thickness: null, hasVentilation: false, hasCableHoles: false }
+    },
+    defaultMaterial: initialOptions?.defaultMaterial || defaultMaterial,
+    defaultThickness: initialOptions?.defaultThickness || 3,
+    features: initialOptions?.features || {
+      hasDoor: false,
+      doorSide: 'front',
+      hasWindow: false,
+      windowSize: { width: 200, height: 150 },
+      hasHandle: false,
+      hasCoolingFan: false,
+      fanCount: 1
+    },
+    mounting: initialOptions?.mounting || {
+      type: 'standalone',
+      hasRails: false,
+      hasBrackets: false
+    }
+  });
+
+  const [dimensions] = useState(defaultDimensions);
+
+  useEffect(() => {
+    onOptionsChange(options);
+  }, [options]); // Celowo pomijamy onOptionsChange
+
+  const updateOption = (updates: Partial<ObudowaOptionsType>) => {
+    setOptions(prev => ({ ...prev, ...updates }));
+  };
+
   // Aktualizacja opcji ścian
   const handleWallsChange = (walls: ObudowaOptionsType['walls']) => {
-    onChange({ ...options, walls });
+    updateOption({ walls });
   };
 
   // Aktualizacja funkcji
   const handleFeatureChange = (feature: keyof ObudowaOptionsType['features'], value: any) => {
-    onChange({
-      ...options,
+    updateOption({
       features: { ...options.features, [feature]: value }
     });
   };
@@ -143,7 +191,7 @@ export const ObudowaOptions: React.FC<Props> = ({
             checked={options.features.hasHandle}
             onChange={(checked) => handleFeatureChange('hasHandle', checked)}
             description="Ergonomiczny uchwyt transportowy"
-            icon={<Handle size={16} />}
+            icon={<Hand size={16} />}
           />
         </div>
 
@@ -162,8 +210,7 @@ export const ObudowaOptions: React.FC<Props> = ({
                   label={`Otwory wentylacyjne - ${wallLabels[wall as keyof typeof wallLabels]}`}
                   checked={config.hasVentilation || false}
                   onChange={(checked) => {
-                    onChange({
-                      ...options,
+                    updateOption({
                       walls: {
                         ...options.walls,
                         [wall]: { ...config, hasVentilation: checked }
@@ -210,8 +257,7 @@ export const ObudowaOptions: React.FC<Props> = ({
                   label={`Otwory kablowe - ${wallLabels[wall as keyof typeof wallLabels]}`}
                   checked={config.hasCableHoles || false}
                   onChange={(checked) => {
-                    onChange({
-                      ...options,
+                    updateOption({
                       walls: {
                         ...options.walls,
                         [wall]: { ...config, hasCableHoles: checked }
@@ -231,8 +277,7 @@ export const ObudowaOptions: React.FC<Props> = ({
           <RadioGroup
             label="Sposób montażu"
             value={options.mounting.type}
-            onChange={(value) => onChange({
-              ...options,
+            onChange={(value) => updateOption({
               mounting: { ...options.mounting, type: value as any }
             })}
             options={[
@@ -246,8 +291,7 @@ export const ObudowaOptions: React.FC<Props> = ({
           <Checkbox
             label="Szyny montażowe"
             checked={options.mounting.hasRails}
-            onChange={(checked) => onChange({
-              ...options,
+            onChange={(checked) => updateOption({
               mounting: { ...options.mounting, hasRails: checked }
             })}
             description="Szyny DIN do montażu urządzeń"
@@ -256,8 +300,7 @@ export const ObudowaOptions: React.FC<Props> = ({
           <Checkbox
             label="Wsporniki"
             checked={options.mounting.hasBrackets}
-            onChange={(checked) => onChange({
-              ...options,
+            onChange={(checked) => updateOption({
               mounting: { ...options.mounting, hasBrackets: checked }
             })}
             description="Dodatkowe wsporniki montażowe"
@@ -271,11 +314,11 @@ export const ObudowaOptions: React.FC<Props> = ({
         <div className={styles.materialGrid}>
           <Select
             label="Materiał wszystkich ścian"
-            value={options.defaultMaterial.id.toString()}
+            value={options.defaultMaterial.id?.toString() || ''}
             onChange={(value) => {
               const material = materials.find(m => m.id === parseInt(value));
               if (material) {
-                onChange({ ...options, defaultMaterial: material });
+                updateOption({ defaultMaterial: material });
               }
             }}
             options={materials.map(mat => ({
@@ -287,8 +330,7 @@ export const ObudowaOptions: React.FC<Props> = ({
           <Select
             label="Grubość (mm)"
             value={options.defaultThickness.toString()}
-            onChange={(value) => onChange({ 
-              ...options, 
+            onChange={(value) => updateOption({ 
               defaultThickness: parseInt(value) 
             })}
             options={[

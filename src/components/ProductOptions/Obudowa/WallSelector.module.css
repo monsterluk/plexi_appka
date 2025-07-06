@@ -1,0 +1,468 @@
+/* WallSelector.module.css */
+
+.container {
+    width: 100%;
+    padding: var(--spacing-lg);
+    background: var(--color-bg-secondary);
+    border-radius: var(--radius-xl);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+  }
+  
+  .header h4 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+  }
+  
+  .counter {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-xs) var(--spacing-md);
+    background: var(--color-bg-tertiary);
+    border-radius: var(--radius-lg);
+  }
+  
+  .counter span {
+    font-weight: 700;
+    font-size: 1rem;
+  }
+  
+  .valid {
+    color: var(--color-accent-blue);
+  }
+  
+  .invalid {
+    color: #f44336;
+  }
+  
+  .warning {
+    color: var(--color-accent-orange);
+  }
+  
+  /* Kontrolki */
+  .controls {
+    display: flex;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+  }
+  
+  .controlButton {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    background: var(--color-bg-tertiary);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-md);
+    color: var(--color-text-secondary);
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all var(--transition-base);
+  }
+  
+  .controlButton:hover {
+    background: var(--color-bg-primary);
+    border-color: var(--color-accent-blue);
+    color: var(--color-text-primary);
+  }
+  
+  /* Wizualizacja 3D */
+  .visualization {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    background: var(--color-bg-primary);
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    perspective: 1000px;
+    overflow: hidden;
+    margin-bottom: var(--spacing-lg);
+  }
+  
+  .cube {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    transform-style: preserve-3d;
+    transition: transform var(--transition-base);
+  }
+  
+  .wall {
+    position: absolute;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    background: rgba(100, 181, 246, 0.1);
+    cursor: pointer;
+    transition: all var(--transition-base);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .wall:hover {
+    background: rgba(100, 181, 246, 0.2);
+    border-color: var(--color-accent-blue);
+  }
+  
+  .wall.selected {
+    background: linear-gradient(135deg, 
+      rgba(100, 181, 246, 0.3) 0%, 
+      rgba(66, 165, 245, 0.4) 100%);
+    border-color: var(--color-accent-blue);
+    box-shadow: inset 0 0 20px rgba(100, 181, 246, 0.3);
+  }
+  
+  /* Pozycje ścian */
+  .front {
+    width: 200px;
+    height: 200px;
+    transform: translateZ(100px);
+  }
+  
+  .back {
+    width: 200px;
+    height: 200px;
+    transform: rotateY(180deg) translateZ(100px);
+  }
+  
+  .left {
+    width: 200px;
+    height: 200px;
+    transform: rotateY(-90deg) translateZ(100px);
+  }
+  
+  .right {
+    width: 200px;
+    height: 200px;
+    transform: rotateY(90deg) translateZ(100px);
+  }
+  
+  .top {
+    width: 200px;
+    height: 200px;
+    transform: rotateX(90deg) translateZ(100px);
+  }
+  
+  .bottom {
+    width: 200px;
+    height: 200px;
+    transform: rotateX(-90deg) translateZ(100px);
+  }
+  
+  /* Etykiety ścian */
+  .wallLabel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-sm);
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: var(--radius-md);
+    color: white;
+    font-weight: 600;
+    font-size: 0.875rem;
+  }
+  
+  .checkIcon {
+    color: #4caf50;
+  }
+  
+  .xIcon {
+    color: #f44336;
+  }
+  
+  /* Wzór wentylacji */
+  .ventPattern {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: grid;
+    grid-template-columns: repeat(4, 8px);
+    grid-template-rows: repeat(3, 8px);
+    gap: 8px;
+    opacity: 0.6;
+  }
+  
+  .ventHole {
+    width: 8px;
+    height: 8px;
+    background: var(--color-bg-primary);
+    border-radius: 50%;
+  }
+  
+  .hint {
+    position: absolute;
+    bottom: var(--spacing-sm);
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    background: rgba(0, 0, 0, 0.8);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-sm);
+  }
+  
+  /* Presety */
+  .presets {
+    margin-bottom: var(--spacing-lg);
+  }
+  
+  .presets h5 {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-sm);
+  }
+  
+  .presetButtons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: var(--spacing-sm);
+  }
+  
+  .presetButton {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-sm);
+    background: var(--color-bg-tertiary);
+    border: 2px solid transparent;
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: all var(--transition-base);
+  }
+  
+  .presetButton:hover {
+    background: var(--color-bg-primary);
+    border-color: var(--color-accent-blue);
+    transform: translateY(-2px);
+  }
+  
+  .presetIcon {
+    font-size: 2rem;
+    color: var(--color-accent-blue);
+  }
+  
+  .presetButton span {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+  }
+  
+  /* Ostrzeżenia */
+  .warnings {
+    background: rgba(255, 152, 0, 0.1);
+    border: 1px solid rgba(255, 152, 0, 0.3);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+  }
+  
+  .warningItem {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    color: var(--color-accent-orange);
+    font-size: 0.875rem;
+    margin-bottom: var(--spacing-xs);
+  }
+  
+  .warningItem:last-child {
+    margin-bottom: 0;
+  }
+  
+  /* Lista wybranych ścian */
+  .selectedList {
+    background: var(--color-bg-tertiary);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+  }
+  
+  .selectedList h5 {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-sm);
+  }
+  
+  .wallTags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
+  }
+  
+  .wallTag {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    background: var(--gradient-blue);
+    color: white;
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+  
+  .removeButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all var(--transition-base);
+  }
+  
+  .removeButton:hover {
+    background: rgba(255, 255, 255, 0.4);
+    transform: scale(1.1);
+  }
+
+.container {
+    width: 100%;
+    animation: fadeIn var(--transition-slow) ease-out;
+  }
+  
+  .header {
+    display: flex;
+    gap: var(--spacing-lg);
+    align-items: start;
+    margin-bottom: var(--spacing-xl);
+    padding: var(--spacing-lg);
+    background: linear-gradient(135deg, 
+      rgba(100, 181, 246, 0.1) 0%, 
+      rgba(66, 165, 245, 0.05) 100%);
+    border-radius: var(--radius-xl);
+    border: 2px solid rgba(100, 181, 246, 0.2);
+  }
+  
+  .icon {
+    color: var(--color-accent-blue);
+    flex-shrink: 0;
+  }
+  
+  .header h3 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-sm);
+  }
+  
+  .description {
+    color: var(--color-text-secondary);
+    font-size: 0.875rem;
+    line-height: 1.6;
+  }
+  
+  .optionsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+  }
+  
+  .section {
+    background: var(--color-bg-secondary);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-lg);
+    transition: all var(--transition-base);
+  }
+  
+  .section:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: var(--shadow-md);
+  }
+  
+  .section h4 {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-md);
+  }
+  
+  .section h4 svg {
+    color: var(--color-accent-orange);
+  }
+  
+  .windowSize {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-md);
+    padding: var(--spacing-sm);
+    background: var(--color-bg-tertiary);
+    border-radius: var(--radius-md);
+  }
+  
+  .ventilationOptions,
+  .cableOptions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+  
+  .defaultMaterial {
+    background: var(--color-bg-secondary);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+  }
+  
+  .defaultMaterial h4 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-md);
+  }
+  
+  .materialGrid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: var(--spacing-md);
+  }
+  
+  .validationError {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    background: rgba(244, 67, 54, 0.1);
+    border: 2px solid rgba(244, 67, 54, 0.3);
+    border-radius: var(--radius-lg);
+    color: #f44336;
+    font-weight: 500;
+  }
+  
+  /* Responsywność */
+  @media (max-width: 768px) {
+    .optionsGrid {
+      grid-template-columns: 1fr;
+    }
+  
+    .materialGrid {
+      grid-template-columns: 1fr;
+    }
+  
+    .windowSize {
+      grid-template-columns: 1fr;
+    }
+  }

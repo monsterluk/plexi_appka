@@ -1,0 +1,151 @@
+.tile {
+  position: relative;
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.tileSelected {
+  box-shadow: 0 0 0 4px var(--color-accent-orange);
+}
+
+.tileContent {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  border: 2px solid transparent;
+  transition: all var(--transition-base);
+}
+
+.tileContent:hover {
+  border-color: var(--color-accent-orange);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-xl);
+}
+
+.tileContentSelected {
+  border-color: var(--color-accent-orange);
+}
+
+.gradientOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.1), transparent);
+}
+
+.content {
+  position: relative;
+  padding: var(--spacing-lg);
+  color: var(--color-text-primary);
+}
+
+.iconWrapper {
+  margin-bottom: var(--spacing-lg);
+}
+
+.iconContainer {
+  width: 5rem;
+  height: 5rem;
+  margin: 0 auto;
+  border-radius: var(--radius-xl);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  background: rgba(255, 143, 0, 0.1);
+  transition: all var(--transition-base);
+}
+
+.iconContainer:hover {
+  background: rgba(255, 143, 0, 0.2);
+}
+
+.titleWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xs);
+  margin-bottom: var(--spacing-sm);
+}
+
+.title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.helpButton {
+  padding: 0.25rem;
+  border-radius: 50%;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  color: var(--color-text-secondary);
+}
+
+.helpButton:hover {
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-primary);
+}
+
+.description {
+  font-size: 0.875rem;
+  text-align: center;
+  color: var(--color-text-secondary);
+}
+
+.selectionIndicator {
+  position: absolute;
+  top: var(--spacing-md);
+  right: var(--spacing-md);
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  border: 2px solid var(--color-text-secondary);
+  background: transparent;
+  transition: all var(--transition-base);
+}
+
+.selectionIndicatorSelected {
+  background: var(--color-accent-orange);
+  border-color: var(--color-accent-orange);
+}
+
+.checkmark {
+  width: 100%;
+  height: 100%;
+  padding: 0.25rem;
+}
+
+.hoverEffect {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity var(--transition-base);
+  pointer-events: none;
+  background: radial-gradient(circle at center, rgba(255, 143, 0, 0.1) 0%, transparent 70%);
+}
+
+.tile:hover .hoverEffect {
+  opacity: 1;
+}
+
+.glowEffect {
+  box-shadow: 0 0 30px rgba(255, 143, 0, 0.4), 0 0 60px rgba(255, 143, 0, 0.2);
+}
+
+.particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.particle {
+  position: absolute;
+  width: 0.25rem;
+  height: 0.25rem;
+  background: var(--color-accent-yellow);
+  border-radius: 50%;
+}

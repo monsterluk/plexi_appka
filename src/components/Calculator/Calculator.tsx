@@ -10,6 +10,9 @@ import { CabinetOptions } from '../ProductOptions/CabinetOptions';
 import { EnclosureOptions } from '../ProductOptions/EnclosureOptions';
 import { WallSelector } from '../ProductOptions/WallSelector';
 import { Results } from './Results';
+import { materials } from '../../Data/materials';
+import { GablotaOptions } from '../ProductOptions/GablotaOptions';
+import { useProductSpecific } from '../../hooks/useProductSpecific';
 
 export function Calculator() {
   const {
@@ -20,6 +23,8 @@ export function Calculator() {
     updateContainerOptions,
     updateEnclosureWalls
   } = useCalculatorLogic();
+  
+  const productSpecific = useProductSpecific(state.productType);
 
   return (
     <div className="calculator">

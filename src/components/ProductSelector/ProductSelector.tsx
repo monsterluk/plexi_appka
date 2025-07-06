@@ -13,6 +13,7 @@ import {
   ShoppingCart, 
   Grid3x3 
 } from 'lucide-react';
+import styles from './ProductSelector.module.css';
 
 export interface Product {
   id: string;
@@ -121,11 +122,11 @@ export const ProductSelector: React.FC<ProductSelectorProps> = ({
   };
 
   return (
-    <div className="w-full">
+    <div className={styles.container}>
       {/* Header */}
-      <div className="text-center mb-12">
+      <div className={styles.header}>
         <motion.h1 
-          className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4"
+          className={styles.title}
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
@@ -133,7 +134,7 @@ export const ProductSelector: React.FC<ProductSelectorProps> = ({
           Wybierz typ produktu
         </motion.h1>
         <motion.p 
-          className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto"
+          className={styles.subtitle}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.2 }}
@@ -144,7 +145,7 @@ export const ProductSelector: React.FC<ProductSelectorProps> = ({
 
       {/* Product Grid */}
       <motion.div 
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+        className={styles.grid}
         variants={container}
         initial="hidden"
         animate="show"
@@ -163,20 +164,20 @@ export const ProductSelector: React.FC<ProductSelectorProps> = ({
       {/* Selected product indicator */}
       {selectedProduct && (
         <motion.div
-          className="mt-12 text-center"
+          className={styles.selectedIndicator}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3 }}
         >
-          <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+          <p className={styles.selectedLabel}>
             Wybrany produkt:
           </p>
-          <div className="inline-flex items-center gap-3 px-6 py-3 bg-gray-100 dark:bg-gray-800 rounded-full">
-            <span className="text-lg font-semibold text-gray-900 dark:text-white">
+          <div className={styles.selectedBadge}>
+            <span className={styles.selectedName}>
               {products.find(p => p.id === selectedProduct)?.name}
             </span>
             <motion.button
-              className="ml-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-medium transition-colors"
+              className={styles.continueButton}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >

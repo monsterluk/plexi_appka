@@ -2,7 +2,15 @@
 
 // utils/surfaceCalculations.ts
 
-import { Dimensions, ContainerOptions, CabinetOptions, EnclosureOptions } from '../types';
+import { 
+  Dimensions, 
+  ContainerOptions, 
+  CabinetOptions, 
+  EnclosureOptions,
+  ImpulsOptions,
+  ComponentCalculation 
+} from '../types';
+import { IMPULS_LIMITER_HEIGHT } from '../constants/pricing';
 
 /**
  * Oblicza powierzchnię pojemnika z uwzględnieniem wszystkich opcji
@@ -171,9 +179,9 @@ export function calculateCabinetSurface(
   });
   
   // Przegrody
-  if (options.partitions.enabled && options.partitions.count > 0) {
-    const isHorizontal = options.partitions.direction === 'horizontal';
-    for (let i = 0; i < options.partitions.count; i++) {
+  if (options.partitions?.enabled && options.partitions.count > 0) {
+    const isHorizontal = options.partitions?.direction === 'horizontal';
+    for (let i = 0; i < (options.partitions?.count || 0); i++) {
       components.push({
         name: `Przegroda ${i + 1}`,
         type: 'partition',

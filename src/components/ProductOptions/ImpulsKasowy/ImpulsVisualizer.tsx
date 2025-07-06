@@ -99,7 +99,7 @@ export const ImpulsVisualizer: React.FC<Props> = ({
   };
 
   const render3DView = () => (
-    <g transform={`translate(200, 200) rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`}>
+    <g transform={`translate(200, 200) rotate(${rotation.y} 0 0)`}>
       {/* Plecy */}
       <path
         d={`M ${-w/2},${-h/2} 

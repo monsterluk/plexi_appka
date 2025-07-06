@@ -106,7 +106,7 @@ import {
   
     // 4. Oblicz koszty główne
     const mainSurface = components.reduce((sum, c) => sum + c.surface, 0);
-    const mainWeight = components.reduce((sum, c) => sum + c.weight, 0);
+    const mainWeight = components.reduce((sum, c) => sum + (c.weight || 0), 0);
     
     // Koszt z odpadem (8%) i mnożnikiem
     const mainCost = mainSurface * options.material.pricePerM2 * 

@@ -1,0 +1,14 @@
+.container {
+  max-width: 64rem;
+  margin: 0 auto;
+}
+
+.emptyState {
+  text-align: center;
+  padding: var(--spacing-xl) 0;
+}
+
+.emptyText {
+  color: var(--color-text-secondary);
+  font-size: 1.125rem;
+}

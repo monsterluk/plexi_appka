@@ -46,7 +46,7 @@ import {
       case 'kosmetyczny':
         return calculateKosmetycznyVariant(dimensions, options);
       default:
-        throw new Error(`Nieznany typ ekspozytora: ${options.subtype}`);
+        throw new Error(`Nieznany typ ekspozytora`);
     }
   }
   

@@ -1,0 +1,118 @@
+/* PILNE POPRAWKI STYLÓW */
+
+/* Resetuj ciemne tło - SUPER AGRESYWNE */
+body, html, #root {
+  background-color: #ffffff !important;
+  color: #333333 !important;
+  min-height: 100vh;
+}
+
+/* Usuń wszystkie ciemne tła */
+* {
+  background-color: transparent !important;
+}
+
+body *, html *, #root * {
+  background-color: inherit !important;
+}
+
+/* Główne kontenery muszą być białe */
+body, html, #root, main, .App, [class*="App"] {
+  background-color: #ffffff !important;
+}
+
+/* Napraw ciemne komponenty */
+[class*="dark"], 
+[class*="Dark"],
+.bg-dark,
+.dark-mode,
+.dark-theme {
+  background-color: #ffffff !important;
+  color: #333333 !important;
+}
+
+/* Główny kontener */
+.calculator-container,
+.main-container,
+[class*="container"] {
+  background-color: #ffffff !important;
+  color: #333333 !important;
+}
+
+/* Formularze */
+input, select, textarea {
+  background-color: #ffffff !important;
+  color: #333333 !important;
+  border: 1px solid #ddd !important;
+}
+
+/* Przyciski */
+button {
+  background-color: #007bff !important;
+  color: white !important;
+  border: none !important;
+  padding: 10px 20px !important;
+  border-radius: 5px !important;
+  cursor: pointer !important;
+}
+
+button:hover {
+  background-color: #0056b3 !important;
+}
+
+/* Karty i sekcje */
+.card, .section, [class*="card"] {
+  background-color: #ffffff !important;
+  border: 1px solid #ddd !important;
+  padding: 20px !important;
+  margin: 10px 0 !important;
+  border-radius: 8px !important;
+}
+
+/* Napraw kontrast tekstów */
+h1, h2, h3, h4, h5, h6, p, span, div, label {
+  color: #333333 !important;
+}
+
+/* Wyniki kalkulacji */
+.results, .price-display {
+  background-color: #f8f9fa !important;
+  color: #333333 !important;
+  padding: 20px !important;
+  border-radius: 8px !important;
+  font-size: 24px !important;
+  font-weight: bold !important;
+}
+
+/* NADPISZ ZMIENNE CSS */
+:root {
+  --color-bg-primary: #ffffff !important;
+  --color-bg-secondary: #f8f9fa !important;
+  --color-bg-tertiary: #e9ecef !important;
+  --color-text-primary: #333333 !important;
+  --color-text-secondary: #666666 !important;
+  --color-text-muted: #999999 !important;
+}
+
+/* Nadpisz style z globals.css */
+body {
+  background-color: #ffffff !important;
+  color: #333333 !important;
+}
+
+/* Napraw wszystkie elementy z klasami zawierającymi 'bg' */
+[class*="bg-"] {
+  background-color: #ffffff !important;
+}
+
+/* Napraw Layout */
+[class*="Layout"], [class*="layout"] {
+  background-color: #ffffff !important;
+  color: #333333 !important;
+}
+
+/* Napraw Header i Footer */
+header, footer, nav {
+  background-color: #f8f9fa !important;
+  color: #333333 !important;
+}

@@ -4,7 +4,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { 
   Square, 
-  Stairs, 
+  TrendingUp as Stairs, 
   Anchor, 
   Paperclip, 
   Package, 

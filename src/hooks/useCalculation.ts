@@ -10,7 +10,7 @@ export function useCalculation<T>(
   debounceMs: number = 300
 ) {
   const { setCalculationResult } = useCalculatorStore();
-  const timeoutRef = useRef<NodeJS.Timeout>();
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const calculate = useCallback(() => {
     try {

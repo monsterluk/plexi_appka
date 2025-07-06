@@ -1,0 +1,18 @@
+.selectContainer {
+  position: relative;
+  width: 100%;
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.infoIcon {
+  color: #666;
+  cursor: help;
+}
