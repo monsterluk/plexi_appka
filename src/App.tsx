@@ -1,19 +1,16 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Calculator } from './pages/Calculator';
-import { AppLayout } from './components/Layout/AppLayout';
-import { ThemeToggle } from './components/ThemeToggle/ThemeToggle';
+import { ModernCalculator } from './pages/ModernCalculator';
 
 function App() {
   return (
     <BrowserRouter>
-      <AppLayout>
-        <Routes>
-          <Route path="/" element={<Calculator />} />
-          <Route path="/monsterluk/plexi_appk" element={<Calculator />} />
-        </Routes>
-        <ThemeToggle />
-      </AppLayout>
+      <Routes>
+        <Route path="/" element={<ModernCalculator />} />
+        <Route path="/old" element={<Calculator />} />
+        <Route path="/monsterluk/plexi_appk" element={<Calculator />} />
+      </Routes>
     </BrowserRouter>
   );
 }

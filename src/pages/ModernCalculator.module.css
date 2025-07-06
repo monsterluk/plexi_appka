@@ -1,0 +1,650 @@
+/* Modern Calculator Styles - Dark Theme */
+
+.container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1a1a2e 0%, #0f0f1e 100%);
+  padding: 1.5rem;
+}
+
+.wrapper {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #dc2626 0%, #f97316 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 0;
+}
+
+.customerBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #dc2626 0%, #f97316 100%);
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 0 2px transparent;
+}
+
+.customerBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 0 2px #dc2626, 0 4px 12px rgba(220, 38, 38, 0.4);
+}
+
+/* Sections */
+.section {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.section::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(135deg, #dc2626 0%, #f97316 50%, #dc2626 100%);
+  border-radius: 1rem;
+  z-index: -1;
+  opacity: 0.3;
+  transition: opacity 0.3s ease;
+}
+
+.section:hover::before {
+  opacity: 0.5;
+}
+
+.section h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: white;
+  margin: 0 0 1rem 0;
+}
+
+/* Product Grid */
+.productGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1rem;
+}
+
+.productCard {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid transparent;
+}
+
+.productCard:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.productCard.selected {
+  background: linear-gradient(135deg, #dc2626 0%, #f97316 100%);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  position: relative;
+  transform: scale(1.05);
+}
+
+.productCard.selected::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(135deg, #dc2626 0%, #f97316 100%);
+  border-radius: 0.5rem;
+  z-index: -1;
+}
+
+.productIcon {
+  margin: 0 auto 0.5rem;
+  color: #e0e0e0;
+}
+
+.productCard.selected .productIcon {
+  color: white;
+}
+
+.productName {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #e0e0e0;
+  margin: 0;
+}
+
+.productCard.selected .productName {
+  color: white;
+}
+
+/* Material Grid */
+.materialGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.materialCard {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid transparent;
+}
+
+.materialCard:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.materialCard.selected {
+  background: linear-gradient(135deg, #dc2626 0%, #f97316 100%);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  position: relative;
+}
+
+.materialCard.selected::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(135deg, #dc2626 0%, #f97316 100%);
+  border-radius: 0.5rem;
+  z-index: -1;
+}
+
+.materialName {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #e0e0e0;
+  margin-bottom: 0.25rem;
+}
+
+.materialCard.selected .materialName {
+  color: white;
+}
+
+.materialPrice {
+  font-size: 0.75rem;
+  color: #a0a0a0;
+}
+
+.materialCard.selected .materialPrice {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Thickness Selector */
+.thicknessSelector {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.thicknessSelector > span {
+  color: #e0e0e0;
+  margin-right: 0.5rem;
+}
+
+.thicknessBtn {
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  border: none;
+  background: rgba(255, 255, 255, 0.1);
+  color: #e0e0e0;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.thicknessBtn:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.thicknessBtn.selected {
+  background: linear-gradient(135deg, #dc2626 0%, #f97316 100%);
+  color: white;
+  box-shadow: 0 0 0 2px #dc2626;
+}
+
+/* Dimensions Grid */
+.dimensionsGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+/* Number Input */
+.numberInput {
+  flex: 1;
+  min-width: 150px;
+}
+
+.numberInput label {
+  display: block;
+  font-size: 0.875rem;
+  color: #a0a0a0;
+  margin-bottom: 0.5rem;
+}
+
+.inputControls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.decrementBtn,
+.incrementBtn {
+  width: 2.5rem;
+  height: 2.5rem;
+  border: none;
+  border-radius: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: white;
+}
+
+.decrementBtn {
+  background: #ef4444;
+}
+
+.decrementBtn:hover {
+  background: #dc2626;
+}
+
+.incrementBtn {
+  background: #10b981;
+}
+
+.incrementBtn:hover {
+  background: #059669;
+}
+
+.inputWrapper {
+  position: relative;
+  flex: 1;
+}
+
+.inputWrapper input {
+  width: 100%;
+  padding: 0.5rem;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 0.25rem;
+  color: white;
+  font-size: 1rem;
+}
+
+.unit {
+  position: absolute;
+  right: -2.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #a0a0a0;
+  font-size: 0.875rem;
+}
+
+/* Options */
+.optionsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.shelvesInput {
+  width: 100px;
+  padding: 0.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 0.25rem;
+  color: white;
+}
+
+/* Checkbox Option */
+.checkboxOption {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid transparent;
+}
+
+.checkboxOption:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.checkboxOption.checked {
+  background: linear-gradient(135deg, #dc2626 0%, #f97316 100%);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  position: relative;
+}
+
+.checkboxOption.checked::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(135deg, #dc2626 0%, #f97316 100%);
+  border-radius: 0.5rem;
+  z-index: -1;
+}
+
+.checkbox {
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.checkboxOption.checked .checkbox {
+  background: white;
+  border-color: white;
+}
+
+.checkbox svg {
+  width: 1rem;
+  height: 1rem;
+  color: #dc2626;
+}
+
+.checkboxOption span {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #e0e0e0;
+}
+
+.checkboxOption.checked span {
+  color: white;
+}
+
+/* Results Grid */
+.resultsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .resultsGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Calculation Card */
+.calculationCard {
+  background: linear-gradient(135deg, #dc2626 0%, #f97316 100%);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.calculationCard::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+  animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.calculationCard h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0 0 1rem 0;
+}
+
+.icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.calculationDetails {
+  space-y: 0.5rem;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.value {
+  font-weight: 600;
+}
+
+.priceSection {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.priceRow {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+}
+
+.price {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+/* Logistics Card */
+.logisticsCard {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  padding: 1.5rem;
+}
+
+.logisticsCard h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: white;
+  margin: 0 0 1rem 0;
+}
+
+.logisticsDetails {
+  color: #e0e0e0;
+}
+
+.logisticsDetails .value {
+  color: white;
+}
+
+.componentsSection {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.componentsSection h3 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: white;
+  margin: 0 0 0.5rem 0;
+}
+
+.componentsList {
+  space-y: 0.25rem;
+}
+
+.componentRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.875rem;
+  color: #a0a0a0;
+}
+
+/* Modal */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  padding: 1rem;
+}
+
+.modalContent {
+  background: #1a1a2e;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  width: 100%;
+  max-width: 600px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.modalHeader h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: white;
+  margin: 0;
+}
+
+.closeBtn {
+  background: none;
+  border: none;
+  color: #a0a0a0;
+  cursor: pointer;
+  padding: 0.25rem;
+  transition: color 0.2s ease;
+}
+
+.closeBtn:hover {
+  color: white;
+}
+
+.modalBody {
+  space-y: 1rem;
+}
+
+.input {
+  width: 100%;
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 0.5rem;
+  color: white;
+  font-size: 1rem;
+}
+
+.input::placeholder {
+  color: #a0a0a0;
+}
+
+.inputGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.modalActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.cancelBtn,
+.saveBtn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cancelBtn {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.cancelBtn:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.saveBtn {
+  background: linear-gradient(135deg, #dc2626 0%, #f97316 100%);
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.saveBtn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #f97316 0%, #dc2626 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.saveBtn:hover::before {
+  opacity: 1;
+}
+
+.saveBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4);
+}
